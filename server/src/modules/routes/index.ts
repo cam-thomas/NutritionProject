@@ -1,10 +1,12 @@
 import { Application, Router, Request, Response, NextFunction } from 'express'
-import { userRouter } from './tempRouter'
+import userRouter from './userRouter'
+import authRouter from './authRouter'
 
 // TODO: Figure out API design and add any additonal routes
 export const routes = (app: Application): void => {
-  app.use('/api/v1/user', userRouter)
-  app.use('/api/v1/', Router().get('/', pulse))
+  app.use('/api/v1/auth', authRouter)
+  app.use('/api/v1/users', userRouter)
+  app.use('/api/v1/HealthCheck', Router().get('/', pulse))
 }
 
 // sysytem health endpoint

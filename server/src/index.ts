@@ -1,18 +1,17 @@
 import path from 'path'
 import cors from 'cors'
-import dotenv from 'dotenv'
+import { loadEnv } from './lib/config/loadEnv'
 import express from 'express'
 import { routes } from './modules/routes'
+import connectToDb from './modules/utils/connectToDb'
+import log from './lib/logging/logger'
 
-console.log('[info] Loading Environment variables..')
-const envPath = path.resolve(process.cwd(), '.env')
-
-const result = dotenv.config({ path: envPath })
-
-if (result.error) {
-  console.log('Unable to load env variables.. gracefully shutting down')
-  process.exit(1)
+const start = async () => {
+  await loadEnv()
+  await connectToDb()
 }
+
+start()
 
 const port = process.env.PORT
 
@@ -26,7 +25,7 @@ app.use(express.text({ limit: '30mb' }))
 routes(app)
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}/api/v1`)
+  log.info(`[server]: Server is running at http://localhost:${port}/api/v1`)
 })
 
 export default app
