@@ -4,7 +4,8 @@ import {
   prop,
   Severity,
   pre,
-  DocumentType
+  DocumentType,
+  index
 } from '@typegoose/typegoose'
 import argon2 from 'argon2'
 import { nanoid } from 'nanoid'
@@ -20,6 +21,7 @@ import log from '../../lib/logging/logger'
   this.password = hash
   return
 })
+@index({ email: 1 })
 @modelOptions({
   schemaOptions: {
     timestamps: true
@@ -52,8 +54,8 @@ export class User {
   @prop()
   passwordResetCode: string | null
 
-  @prop({ default: false })
-  verified: boolean
+  // @prop({ default: false })
+  // verified: boolean
 
   // candidatePassword == password user supplies on login
   async validatePassword(this: DocumentType<User>, candidatePassword: string) {

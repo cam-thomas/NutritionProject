@@ -2,6 +2,12 @@ import path from 'path'
 import dotenv from 'dotenv'
 import log from '../logging/logger'
 
+export interface ServiceConfig {
+  port: number | string
+  dbURI: string
+  logLevel: string
+}
+
 export const loadEnv = async () => {
   log.info('Loading Environment variables..')
   const envPath = path.resolve(process.cwd(), '.env')

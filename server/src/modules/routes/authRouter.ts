@@ -1,5 +1,9 @@
 import * as express from 'express'
-import { registerUser } from '../controllers/auth/registerUser'
-// Authentication Router
+import { createSessionHandler } from '../controllers/auth/authController'
+import validateResource from '../middleware/validateResource'
+import { createSessionSchema } from '../schema/authSchema'
 
-export default express.Router().post('/register/', registerUser)
+// Authentication Router
+export default express
+  .Router()
+  .post('/', validateResource(createSessionSchema), createSessionHandler)
