@@ -13,6 +13,45 @@
   }
 }
 
+img {
+  width: 500px;
+  height: 500px;
+}
+.doctorImage {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  bottom: 50%;
+  left: 65%;
+}
+
+#improveDes {
+  color: grey;
+  text-align: left;
+}
+
+.bodyOne {
+  position: absolute;
+  background-color: #F0FFFF;
+  height: 100%;
+  width: 100%;
+}
+.improveHeadline {
+  margin-left: 60px;
+  width: 45%;
+  height: 50%;
+  position: relative;
+  top: 150px;
+  text-align: left;
+
+}
+
+.header {
+  color:navy;
+  text-align: left;
+  margin-left: 25px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
