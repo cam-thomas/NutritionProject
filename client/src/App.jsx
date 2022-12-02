@@ -8,9 +8,23 @@ import Image from "./doctor.png"
 
 
 function App(props) {
+  const [userinputFood, setuserinputFood] = useState("")
+  // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
   const [foodEaten, setfoodEaten] = useState({})
-  const [recommendedNutrition, setrecommendedNutrition] = useState({'Calories: ': 0, 'Carbohydrates': 0, 'Fiber' : 0, 'Protein' : 0, 'Fat' : 0, 'Water' : 0})
+  const [recommendedNutrition, setrecommendedNutrition] = useState({Calories: 0, Carbohydrates: 0, Fiber : 0, Protein: 0, Fat: 0, Water: 0})
   
+
+  function handleUserInputFood(event) {
+    setuserinputFood(event.target.value)
+  }
+
+  function handleUserInputFormSubmit(event) {
+    // Need to add access database stuff here
+    // REMOVE LATER
+    event.preventDefault()
+    foodEaten[userinputFood] = "TEST"
+    setfoodEaten({...foodEaten})
+  }
   return (
     <div className="App">
       <header>
@@ -24,6 +38,15 @@ function App(props) {
         </div>
         <div className="doctorImage">
             <img src={Image} alt="DoctorImage"/>
+        </div>
+        <div className="inputFood" >
+          <form onSubmit={handleUserInputFormSubmit}>
+            <label className="label">
+              Add Foods You Ate Today: 
+              <br/>
+              <input type="text" className= "inputFoodForm" value={userinputFood} onChange={handleUserInputFood} />
+            </label>
+          </form>
         </div>
       </div>
     </div>

@@ -13,6 +13,24 @@
   }
 }
 
+.label {
+  text-align: right;
+}
+.inputFood {
+  margin-left: 60px;
+  position: absolute;
+  text-align: left;
+  bottom: 55%;
+  width: 30%;
+}
+
+.inputFoodForm {
+  width: 100%;
+  height: 20px;
+  margin-top: 20px;
+}
+
+
 img {
   width: 500px;
   height: 500px;
@@ -35,6 +53,8 @@ img {
   background-color: #F0FFFF;
   height: 100%;
   width: 100%;
+  font-family: "Comic Sans MS", "Comic Sans", "cursive";
+  
 }
 .improveHeadline {
   margin-left: 60px;
