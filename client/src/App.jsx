@@ -5,6 +5,28 @@ import logo from './logo.svg';
 import './App.css';
 import Image from "./doctor.png"
 
+/* {Object.keys(recommendedNutrition).map((key, index) => <li>{recommendedNutrition[key]}</li>)}*/
+
+
+function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
+  if (userSignedIn) {
+    return (
+      <div className="recommendedNutrients">
+          Your Recommended Daily Nutrients
+        <ul className="list-group">
+          {Object.keys(recommendedNutrition).map((key, index) => (
+            <li className="list-group-item"> 
+              {key+":"} {recommendedNutrition[key]}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+}
+
+
 
 function SignUpButton({userSignedIn}) {
   /* TODO: Need to add functionality when user clicks Sign Up Button  */
@@ -76,6 +98,7 @@ function App(props) {
         <div className="inputFood" >
             <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit}/>
         </div>
+        <RecommendedNutrients userSignedIn={userSignedIn} recommendedNutrition={recommendedNutrition}/>
       </div>
     </div>
   );

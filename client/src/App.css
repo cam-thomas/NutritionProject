@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+
 }
 
 .App-logo {
@@ -14,8 +15,19 @@
 }
 
 
+.recommendedNutrients {
+  position: absolute;
+  margin-left: 60px;
+  top: 200px;
+}
+
+
 .signedInContent {
   font-family: "Comic Sans MS", "Comic Sans", "cursive";
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 484px;
 }
 
 button {
@@ -52,8 +64,8 @@ button {
   margin-left: 60px;
   position: absolute;
   text-align: left;
-  bottom: 55%;
-  width: 30%;
+  bottom: 80%;
+  width: 70%;
 }
 
 .inputFoodForm {
