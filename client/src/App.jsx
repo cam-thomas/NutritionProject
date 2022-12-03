@@ -6,8 +6,38 @@ import './App.css';
 import Image from "./doctor.png"
 
 
+function SignUpButton({userSignedIn}) {
+  /* TODO: Need to add functionality when user clicks Sign Up Button  */
+  function onUserClick(event) {
+    console.log("TEST")
+  }
+  if (!userSignedIn) {
+    return (
+      <div className="signUpDiv">
+          <button  onClick={onUserClick} className="signUpButton"> Sign Up</button>
+      </div>
+    )
+  }
+}
+
+
+function FoodInputForm({userSignedIn, userinputFood, handleUserInputFood, handleUserInputFormSubmit}) {
+  if (userSignedIn) {
+    return (
+      <form onSubmit={handleUserInputFormSubmit}>
+            <label className="label">
+              Add Foods You've Eaten Today: 
+              <br/>
+              <input type="text" className= "inputFoodForm" value={userinputFood} onChange={handleUserInputFood} />
+            </label>
+      </form>
+    )
+  }
+}
+
 
 function App(props) {
+  const [userSignedIn, setuserSignedIn] = useState(true)
   const [userinputFood, setuserinputFood] = useState("")
   // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
   const [foodEaten, setfoodEaten] = useState({})
@@ -39,14 +69,12 @@ function App(props) {
         <div className="doctorImage">
             <img src={Image} alt="DoctorImage"/>
         </div>
+        <SignUpButton userSignedIn={userSignedIn} />
+      </div>
+
+      <div className="signedInContent">
         <div className="inputFood" >
-          <form onSubmit={handleUserInputFormSubmit}>
-            <label className="label">
-              Add Foods You Ate Today: 
-              <br/>
-              <input type="text" className= "inputFoodForm" value={userinputFood} onChange={handleUserInputFood} />
-            </label>
-          </form>
+            <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit}/>
         </div>
       </div>
     </div>

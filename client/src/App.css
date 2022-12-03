@@ -13,6 +13,38 @@
   }
 }
 
+
+.signedInContent {
+  font-family: "Comic Sans MS", "Comic Sans", "cursive";
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 200px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
+}
+
+.signUpButton {
+  width: 150px;
+  height: 50px;
+  color: white;
+  background-color: #6495ED;
+  
+  
+}
+.signUpDiv {
+  position: absolute;
+  bottom: 67%;
+  margin-left: 60px;
+}
+
+
 .label {
   text-align: right;
 }
