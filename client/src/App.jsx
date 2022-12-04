@@ -5,10 +5,10 @@ import logo from './logo.svg';
 import './App.css';
 import Image from "./doctor.png"
 
-/* {Object.keys(recommendedNutrition).map((key, index) => <li>{recommendedNutrition[key]}</li>)}*/
 
 
 function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
+  /* TODO: Add units */
   if (userSignedIn) {
     return (
       <div className="recommendedNutrients">
@@ -26,6 +26,7 @@ function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
 }
 
 function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) {
+  /* TODO: Add units */
   if (userSignedIn) {
     return (
       <div className="nutrientsEaten">
