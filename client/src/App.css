@@ -51,11 +51,32 @@
   top: 200px;
 }
 
+.nutrientRequirementAchieved {
+  margin-bottom: 5px;
+  border-width: 2px;
+  border-style: solid;
+  list-style-type: none;
+  border-radius: 15px;
+  padding: 5px;
+  background-color: aquamarine;
+}
+
+.nutrientsEatenList {
+  margin-bottom: 5px;
+  border-width: 2px;
+  border-style: solid;
+  list-style-type: none;
+  border-radius: 15px;
+  padding: 5px;
+  /* background-color: aquamarine; */
+}
+
+
 .nutrientsEaten {
   position: absolute;
-  margin-left: 920px;
+  left: 1300px;
   top: 200px;
-  width: 50%;
+  width: 350px;
 }
 
 

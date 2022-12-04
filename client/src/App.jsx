@@ -25,17 +25,28 @@ function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
   }
 }
 
-function NutrientsEaten({ userSignedIn, nutrientsEaten }) {
+function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) {
   if (userSignedIn) {
     return (
       <div className="nutrientsEaten">
        <h3 className="nutrientsEatenHeader">Nutrients Eaten Today</h3>
         <ul className="list-group">
-          {Object.keys(nutrientsEaten).map((key, index) => (
-            <li className="list-group-item">
-              {key + ":"} {nutrientsEaten[key]}
-            </li>
-          ))}
+          {Object.keys(nutrientsEaten).map((key, index) => {
+            if (nutrientsEaten[key] >= recommendedNutrition[key]) {
+              return (
+                <li key={key} className="nutrientRequirementAchieved">
+                  {key + ":"} {nutrientsEaten[key]}
+                </li>
+              );
+            }
+            else {
+              return (
+                <li key={key} className="nutrientsEatenList">
+                  {key + ":"} {nutrientsEaten[key]}
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
     );
@@ -117,7 +128,7 @@ function App(props) {
             <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit}/>
         </div>
         <RecommendedNutrients userSignedIn={userSignedIn} recommendedNutrition={recommendedNutrition}/>
-        <NutrientsEaten userSignedIn={userSignedIn} nutrientsEaten={consumedNutrients} />
+        <NutrientsEaten userSignedIn={userSignedIn} nutrientsEaten={consumedNutrients} recommendedNutrition={recommendedNutrition} />
       </div>
     </div>
   );
