@@ -23,6 +23,23 @@ function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
       </div>
     );
   }
+}
+
+function NutrientsEaten({ userSignedIn, nutrientsEaten }) {
+  if (userSignedIn) {
+    return (
+      <div className="foodEaten">
+        Nutrients Eaten Today
+        <ul className="list-group">
+          {Object.keys(nutrientsEaten).map((key, index) => (
+            <li className="list-group-item">
+              {key + ":"} {nutrientsEaten[key]}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 
 }
 
@@ -64,6 +81,7 @@ function App(props) {
   // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
   const [foodEaten, setfoodEaten] = useState({})
   const [recommendedNutrition, setrecommendedNutrition] = useState({Calories: 0, Carbohydrates: 0, Fiber : 0, Protein: 0, Fat: 0, Water: 0})
+  const [consumedNutrients, setconsumedNutrients] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
   
 
   function handleUserInputFood(event) {
@@ -99,6 +117,7 @@ function App(props) {
             <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit}/>
         </div>
         <RecommendedNutrients userSignedIn={userSignedIn} recommendedNutrition={recommendedNutrition}/>
+        <NutrientsEaten userSignedIn={userSignedIn} nutrientsEaten={consumedNutrients} />
       </div>
     </div>
   );
