@@ -109,10 +109,10 @@ function App(props) {
   }
   return (
     <div className="App">
-      <header>
+      <div className="topHeader">
         <h1 className="header"> GoNutrition </h1>
         {/* Need Login Stuff */}
-      </header>
+      </div>
       <div className="bodyOne">
         <div className="improveHeadline">
           <h1 id="improveNutrition">Improve your Nutrition</h1>
