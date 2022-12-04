@@ -12,10 +12,10 @@ function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
   if (userSignedIn) {
     return (
       <div className="recommendedNutrients">
-          Your Recommended Daily Nutrients
+          <h3 className="recNutrientsHeader">Your Recommended Daily Nutrients</h3>
         <ul className="list-group">
           {Object.keys(recommendedNutrition).map((key, index) => (
-            <li className="list-group-item"> 
+            <li className="recNutrientsList"> 
               {key+":"} {recommendedNutrition[key]}
             </li>
           ))}
@@ -28,8 +28,8 @@ function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
 function NutrientsEaten({ userSignedIn, nutrientsEaten }) {
   if (userSignedIn) {
     return (
-      <div className="foodEaten">
-        Nutrients Eaten Today
+      <div className="nutrientsEaten">
+       <h3 className="nutrientsEatenHeader">Nutrients Eaten Today</h3>
         <ul className="list-group">
           {Object.keys(nutrientsEaten).map((key, index) => (
             <li className="list-group-item">

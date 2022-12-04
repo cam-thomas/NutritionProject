@@ -15,16 +15,47 @@
 }
 
 
+.recNutrientsHeader {
+  border-style: none;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #61dafb;
+  color: white;
+  position: relative;
+  left: 20px;
+  
+}
+
+.nutrientsEatenHeader {
+  border-style: none;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #61dafb;
+  color: white;
+  position: relative;
+  left: 20px;
+}
+
+.recNutrientsList {
+  margin-bottom: 3px;
+  border-width: 2px;
+  border-style: solid;
+  list-style-type: none;
+  padding: 5px;
+  
+}
+
 .recommendedNutrients {
   position: absolute;
   margin-left: 60px;
   top: 200px;
 }
 
-.foodEaten {
+.nutrientsEaten {
   position: absolute;
-  margin-left: 400px;
+  margin-left: 920px;
   top: 200px;
+  width: 50%;
 }
 
 
@@ -59,7 +90,7 @@ button {
 
 .signUpDiv {
   position: absolute;
-  bottom: 67%;
+  bottom: 55%;
   margin-left: 60px;
 }
 
