@@ -1,17 +1,8 @@
 import path from 'path'
 import cors from 'cors'
-import { loadEnv } from './lib/config/loadEnv'
 import express from 'express'
 import { routes } from './modules/routes'
-import connectToDb from './modules/utils/connectToDb'
 import log from './lib/logging/logger'
-
-const start = async () => {
-  await loadEnv()
-  await connectToDb()
-}
-
-start()
 
 const port = process.env.PORT
 
