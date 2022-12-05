@@ -31,3 +31,14 @@ export const existing_users = [
     weight: 175
   }
 ]
+
+// {
+//   name: 'Erica',
+//   email: 'erica123@gmail.com',
+//   password: 'password',
+//   loggedIn: false,
+//   gender: 'female',
+//   age: 27,
+//   height: 58,
+//   weight: 175
+// }

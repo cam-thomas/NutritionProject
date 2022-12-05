@@ -1,10 +1,9 @@
 import * as express from 'express'
+import { updateNutrients } from '../controllers/updateNutrients'
 
 // template router
 export default express
   .Router()
-  // create user -> middleware ensures req body has needed info
-  .post('/')
-  // get user
   .get('/')
-  .put('/')
+  .post('/')
+  .put('/addFood', updateNutrients)

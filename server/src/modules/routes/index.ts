@@ -4,8 +4,9 @@ import authRouter from './authRouter'
 
 // (1)
 export const routes = (app: Application): void => {
-  app.use('/api/v1/users', userRouter)
   app.use('/api/v1/auth', authRouter)
+  app.use('/api/v1/users', userRouter)
+
   app.use('/api/v1/HealthCheck', Router().get('/', pulse))
 }
 

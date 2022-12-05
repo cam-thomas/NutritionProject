@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { USER_DICT } from '../../index'
+import { USER_DICT, LOGGED_IN_USER } from '../../index'
 import log from '../../lib/logging/logger'
 
 export const createUserHandler = async (
@@ -27,8 +27,9 @@ export const createUserHandler = async (
     const new_user = USER_DICT[body.name]
 
     // update logged in user
+    LOGGED_IN_USER.name = new_user.name
 
-    // grab needed info for user to send back to main page
+    // TODO: grab needed info for user to send back to main page
 
     log.info(`Created User: ${new_user.name}`)
     // console.log(new_user)

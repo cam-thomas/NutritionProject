@@ -5,24 +5,44 @@ import { routes } from './modules/routes'
 import log from './lib/logging/logger'
 import { userInfo, existing_users } from './modules/data/users'
 import { nutrients } from './modules/data/nutrients'
+import { foodType } from './modules/data/foods'
 
 const port = 8080
 // keep track of which user is logged in
-export let LOGGED_IN_USER = ''
-//
+export var LOGGED_IN_USER = {
+  name: 'Erica'
+}
+
+// maps users name to auth & personal info
 export const USER_DICT: { [key: string]: userInfo } = {}
-// TODO: create interface for needed nutrients
+
+// maps users name to current nutrients
 export const CURRENT_NUTRIENTS: { [key: string]: nutrients } = {}
 
 // Static: always the same amount of nutrients per person
 export const NEEDED_NUTRIENTS: { [key: string]: nutrients } = {}
 
-export const RECOMMENDER_DICT = {}
+// maps users name to what foods we currently recommend for them
+export const RECOMMENDER_DICT: { [key: string]: foodType[] } = {}
 
 // load existing users
 existing_users.forEach((user) => {
   USER_DICT[user.name] = user
 })
+
+// load Kai and Erica's needed nutrients
+NEEDED_NUTRIENTS['Erica'] = {
+  calories: 2197,
+  carbs: 247,
+  protein: 64,
+  fat: 49
+}
+NEEDED_NUTRIENTS['Kai'] = {
+  calories: 2873,
+  carbs: 323,
+  protein: 64,
+  fat: 64
+}
 
 const app = express()
 
