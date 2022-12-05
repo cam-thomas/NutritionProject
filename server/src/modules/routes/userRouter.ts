@@ -1,6 +1,6 @@
 import * as express from 'express'
 
-import { createUserHandler } from '../controllers/user/createUser'
+import { createUserHandler } from '../controllers/createUser'
 // template router
 export default express
   .Router()
