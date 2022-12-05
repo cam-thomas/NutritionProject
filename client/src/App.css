@@ -17,6 +17,38 @@
   }
 }
 
+.editInfo{
+  position: relative;
+  top: 50px;
+}
+
+.editInfoHeader {
+  position: relative;
+  left: 180px;
+}
+
+.cancelAndSubmitButtons {
+  margin-top: 10px;
+}
+.editLabel {
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.editOptions {
+  height: 200px;
+}
+
+.foodsEatenHeader {
+  border-style: none;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #61dafb;
+  color: white;
+  position: relative;
+  left: 20px;
+}
+
 
 .recNutrientsHeader {
   border-style: none;
