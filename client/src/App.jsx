@@ -5,7 +5,7 @@ import logo from './logo.svg';
 import './App.css';
 import Image from "./doctor.png"
 
-
+/* NOTE: EDIT BUTTON AND LOGOUT BUTTONS ARE STILL BEING IMPLEMENTED */
 
 function RecommendedNutrients({userSignedIn, recommendedNutrition}) {
   /* TODO: Add units */
@@ -88,6 +88,7 @@ function FoodInputForm({userSignedIn, userinputFood, handleUserInputFood, handle
 
 
 function App(props) {
+  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
   const [userSignedIn, setuserSignedIn] = useState(true)
   const [userinputFood, setuserinputFood] = useState("")
   // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
@@ -107,12 +108,39 @@ function App(props) {
     foodEaten[userinputFood] = "TEST"
     setfoodEaten({...foodEaten})
   }
+
+  /* TODO: Need to implement */
+  function handleEditClick(event) {
+    console.log("Edit clicked")
+    setIsEditButtonClicked(true)
+    
+  }
+
+  /* TODO: Need to implement */
+  function handleLogoutClick(event) {
+    console.log("Logout clicked")
+    // REMOVE LATER
+    setIsEditButtonClicked(false)
+  }
+
   return (
     <div className="App">
       <div className="topHeader">
         <h1 className="header"> GoNutrition </h1>
         {/* Need Login Stuff */}
+        {userSignedIn ? (
+        <div className="navigation">
+          <button className="editButton" onClick={handleEditClick}>
+            Edit
+          </button>
+          <button className="logoutButton" onClick={handleLogoutClick}>
+            Logout
+          </button>
+        </div>) : null}
       </div>
+      {isEditButtonClicked ? (
+        <div className="editInfo"> </div>
+      ) : null}
       <div className="bodyOne">
         <div className="improveHeadline">
           <h1 id="improveNutrition">Improve your Nutrition</h1>
@@ -124,7 +152,7 @@ function App(props) {
         <SignUpButton userSignedIn={userSignedIn} />
       </div>
 
-      <div className="signedInContent">
+      <div className="signedInContent" style={{display : isEditButtonClicked ? 'none' : 'block'}}>
         <div className="inputFood" >
             <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit}/>
         </div>

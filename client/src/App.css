@@ -74,7 +74,17 @@
   /* background-color: aquamarine; */
 }
 
+.navigation {
+  position: relative;
+  height: 50px;
+  bottom: 50px;
+  float: right;
+  margin-right: 10px;
+}
 
+.editButton {
+  width: 90px;
+}
 .nutrientsEaten {
   position: absolute;
   left: 1300px;
