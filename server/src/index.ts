@@ -2,15 +2,21 @@ import path from 'path'
 import cors from 'cors'
 import express from 'express'
 import { routes } from './modules/routes'
-import { log } from './lib/logging/logger'
+import log from './lib/logging/logger'
 import { userInfo, existing_users } from './modules/data/users'
+import { nutrients } from './modules/data/nutrients'
 
 const port = 8080
 // keep track of which user is logged in
 export let LOGGED_IN_USER = ''
+//
 export const USER_DICT: { [key: string]: userInfo } = {}
 // TODO: create interface for needed nutrients
-export const USER_NUTIENTS: { [key: string]: object } = {}
+export const CURRENT_NUTRIENTS: { [key: string]: nutrients } = {}
+
+// Static: always the same amount of nutrients per person
+export const NEEDED_NUTRIENTS: { [key: string]: nutrients } = {}
+
 export const RECOMMENDER_DICT = {}
 
 // load existing users

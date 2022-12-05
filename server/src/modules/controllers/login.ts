@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { USER_DICT, LOGGED_IN_USER } from '../../index'
-import { log as l } from '../../lib/logging/logger'
+import log from '../../lib/logging/logger'
 
 export const loginHandler = async (
   req: Request,

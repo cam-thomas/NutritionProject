@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 const level = process.env.LOG_LEVEL || 'info'
 
-export const log = logger({
+const log = logger({
   transport: {
     target: 'pino-pretty'
   },
@@ -13,3 +13,5 @@ export const log = logger({
   },
   timestamp: () => `,"time":"${dayjs().format()}"`
 })
+
+export default log
