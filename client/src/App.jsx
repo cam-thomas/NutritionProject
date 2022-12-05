@@ -70,13 +70,13 @@ function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) 
 
 function SignUpButton({userSignedIn}) {
   /* TODO: Need to add functionality when user clicks Sign Up Button  */
-  function onUserClick(event) {
+  function onSignUpClick(event) {
     console.log("TEST")
   }
   if (!userSignedIn) {
     return (
       <div className="signUpDiv">
-          <button  onClick={onUserClick} className="signUpButton"> Sign Up</button>
+          <button  onClick={onSignUpClick} className="signUpButton"> Sign Up</button>
       </div>
     )
   }
@@ -203,7 +203,8 @@ function App(props) {
   function handleLogoutClick(event) {
     console.log("Logout clicked")
     // REMOVE LATER
-    setIsEditButtonClicked(false)
+    // setIsEditButtonClicked(false)
+    setuserSignedIn(false)
   }
 
   return (
@@ -219,7 +220,7 @@ function App(props) {
           <button className="logoutButton" onClick={handleLogoutClick}>
             Logout
           </button>
-        </div>) : null}
+        </div>) : <div className="navigation"> <button className="logoutButton"> Login </button> </div>}
       </div>
       {isEditButtonClicked ? (
         <EditForm userInfo={userInfo} setuserInfo={setuserInfo} setIsEditButtonClicked={setIsEditButtonClicked} />
