@@ -17,6 +17,19 @@
   }
 }
 
+.createAccountHeader {
+  position: relative;
+  left: 130px;
+}
+
+.inputAccountInfo {
+  margin-bottom: 70px;
+}
+
+#signupInput {
+  left: 11px;
+}
+
 .editInfo{
   position: relative;
   top: 50px;
