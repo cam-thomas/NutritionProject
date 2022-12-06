@@ -1,9 +1,13 @@
 import * as express from 'express'
-import { createSessionHandler } from '../controllers/auth/authController'
-import validateResource from '../middleware/validateResource'
-import { createSessionSchema } from '../schema/authSchema'
 
-// Authentication Router
+import { loginHandler } from '../controllers/login'
+import { logOutHandler } from '../controllers/logout'
+import { createUserHandler } from '../controllers/createUser'
+// template router
 export default express
   .Router()
-  .post('/', validateResource(createSessionSchema), createSessionHandler)
+  // create user -> middleware ensures req body has needed info
+  .get('/login', loginHandler)
+  .get('/logout', logOutHandler)
+  // get user
+  .post('/register', createUserHandler)
