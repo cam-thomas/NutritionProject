@@ -14,10 +14,10 @@ function FoodsEatenToday({ userSignedIn, foodsEaten }) {
       <div className="foodsEaten">
         <h3 className="foodsEatenHeader">Foods Eaten Today</h3>
         <ul className="list-group">
-          {Object.keys(foodsEaten).map((key, index) => (
+          {foodsEaten.map((food) => (
             <li className="recNutrientsList">
               {/* change it to foodsEaten[key]["calories"] after backend implemented */}
-              {key + ":"} {foodsEaten[key]}
+              {food.Name + ":"} {food.Calories} Calories
             </li>
           ))}
         </ul>
@@ -412,9 +412,9 @@ function App(props) {
   const [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
   const [userSignedIn, setuserSignedIn] = useState(false)
   const [userinputFood, setuserinputFood] = useState("")
-  // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
-  const [foodEaten, setfoodEaten] = useState({})
-  const [recommendedNutrition, setrecommendedNutrition] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
+  // foodEaten: [ {Name: Apple, Calories: ..., Carbohydrates: ..., }, {Name: Orange, Calories: ..., } ]
+  const [foodEaten, setfoodEaten] = useState([])
+  const [recommendedNutrition, setrecommendedNutrition] = useState({ Calories: 10, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
   const [nutrientsEaten, setNutrientsEaten] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
   const [recommendedFoods, updateFoods] = useState({ Apple: { Calories: 1 }, Hi: { Calories: 2 }, Orange: { Calories: 3 }, Bye: { Calories: 4 } })
   /* UserInfo dictionary may need to be updated based on backend */
@@ -430,7 +430,8 @@ function App(props) {
     // REMOVE LATER
     event.preventDefault()
     foodEaten[userinputFood] = "TEST"
-    setfoodEaten({ ...foodEaten })
+    let userFood = {Name: userinputFood, Calories: ""}
+    setfoodEaten([...foodEaten, userFood])
   }
 
   /* TODO: Need to implement */
