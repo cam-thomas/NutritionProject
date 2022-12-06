@@ -1,10 +1,37 @@
-import React from 'react';
-import { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import logo from './logo.svg';
-import './App.css';
-import Image from "./doctor.png"
+import React from "react";
+import { useState } from "react";
+import ReactDOM from "react-dom/client";
+import logo from "./logo.svg";
+import "./App.css";
+import Image from "./doctor.png";
 
+async function registerUserCall(userInfo) {
+  const res = await fetch("http://localhost:8080/api/v1/auth/register", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    // TODO: pass this info fron create form ?
+    body: JSON.stringify(userInfo),
+  });
+  const data = await res.json();
+  console.log("Response from create account: ", JSON.stringify(data));
+  return data;
+}
+
+// loginCreds should be email and password
+async function loginUserCall(
+  loginCreds = { email: "kai123@gmail.com", password: "password" }
+) {
+  const res = await fetch("http://localhost:8080/api/v1/auth/login", {
+    method: "get",
+    headers: { "Content-Type": "application/json" },
+    // TODO: pass this info fron login form ?
+    body: loginCreds,
+  });
+
+  const data = await res.json();
+  alert(data);
+  // change or return state ?
+}
 
 // WE NEED TO ADD NUTRIENTS OF FOOD EATEN TO NUTRIENTS EATEN TODAY WHEN WE PULL FROM DATA BASE
 function FoodsEatenToday({ userSignedIn, foodsEaten }) {
@@ -25,9 +52,6 @@ function FoodsEatenToday({ userSignedIn, foodsEaten }) {
   }
 }
 
-
-
-
 function RecommendedNutrients({ userSignedIn, recommendedNutrition }) {
   /* TODO: Add units */
   if (userSignedIn) {
@@ -37,7 +61,8 @@ function RecommendedNutrients({ userSignedIn, recommendedNutrition }) {
         <ul className="list-group">
           {Object.keys(recommendedNutrition).map((key, index) => (
             <li className="recNutrientsList">
-              {key + ":"} {recommendedNutrition[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
+              {key + ":"} {recommendedNutrition[key]}{" "}
+              {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
             </li>
           ))}
         </ul>
@@ -46,12 +71,18 @@ function RecommendedNutrients({ userSignedIn, recommendedNutrition }) {
   }
 }
 
-function RecommendedFoods({ userSignedIn, recommendedFoods, recommendedNutrition, nutrientsEaten, handleFoodClick }) {
+function RecommendedFoods({
+  userSignedIn,
+  recommendedFoods,
+  recommendedNutrition,
+  nutrientsEaten,
+  handleFoodClick,
+}) {
   if (userSignedIn) {
-    let metRequirements = true
+    let metRequirements = true;
     Object.keys(nutrientsEaten).map((key, index) => {
       if (nutrientsEaten[key] < recommendedNutrition[key]) {
-        metRequirements = false
+        metRequirements = false;
       }
     });
 
@@ -75,26 +106,28 @@ function RecommendedFoods({ userSignedIn, recommendedFoods, recommendedNutrition
     // }
     // );
 
-
     return (
       <div className="recommendedFoods">
         <h3 className="recFoodsHeader">Recommended Foods</h3>
 
         {/* {metRequirements ? (<ul>{listItems}</ul>) : null} */}
-        {metRequirements ? null : (Object.keys(recommendedFoods).map((key, index) => (
-          <ul className="recFoodList">
-            <button onClick={() => handleFoodClick(key)}>
-              {key}
-            </button>
-          </ul>
-        )))}
-
+        {metRequirements
+          ? null
+          : Object.keys(recommendedFoods).map((key, index) => (
+              <ul className="recFoodList">
+                <button onClick={() => handleFoodClick(key)}>{key}</button>
+              </ul>
+            ))}
       </div>
-    )
+    );
   }
 }
 
-function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) {
+function NutrientsEaten({
+  userSignedIn,
+  nutrientsEaten,
+  recommendedNutrition,
+}) {
   /* TODO: Add units */
   if (userSignedIn) {
     return (
@@ -105,14 +138,23 @@ function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) 
             if (nutrientsEaten[key] >= recommendedNutrition[key]) {
               return (
                 <li key={key} className="nutrientRequirementAchieved">
-                  {key + ":"} {nutrientsEaten[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
+                  {key + ":"} {nutrientsEaten[key]}{" "}
+                  {key == "Calories"
+                    ? "kCal"
+                    : key == "Water"
+                    ? "liters"
+                    : "grams"}
                 </li>
               );
-            }
-            else {
+            } else {
               return (
                 <li key={key} className="nutrientsEatenList">
-                  {key + ":"} {nutrientsEaten[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
+                  {key + ":"} {nutrientsEaten[key]}{" "}
+                  {key == "Calories"
+                    ? "kCal"
+                    : key == "Water"
+                    ? "liters"
+                    : "grams"}
                 </li>
               );
             }
@@ -121,72 +163,87 @@ function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) 
       </div>
     );
   }
-
 }
-
 
 function SignUpButton({ userSignedIn, setIsSignUpButtonClicked }) {
   /* TODO: Need to add functionality when user clicks Sign Up Button  */
   function onSignUpClick(event) {
-    setIsSignUpButtonClicked(true)
+    setIsSignUpButtonClicked(true);
   }
   if (!userSignedIn) {
     return (
       <div className="signUpDiv">
-        <button onClick={onSignUpClick} className="signUpButton"> Sign Up</button>
+        <button onClick={onSignUpClick} className="signUpButton">
+          {" "}
+          Sign Up
+        </button>
       </div>
-    )
+    );
   }
 }
 
-
-function FoodInputForm({ userSignedIn, userinputFood, handleUserInputFood, handleUserInputFormSubmit }) {
+function FoodInputForm({
+  userSignedIn,
+  userinputFood,
+  handleUserInputFood,
+  handleUserInputFormSubmit,
+}) {
   if (userSignedIn) {
     return (
       <form onSubmit={handleUserInputFormSubmit}>
         <label className="label">
           Add Foods You've Eaten Today:
           <br />
-          <input type="text" className="inputFoodForm" value={userinputFood} onChange={handleUserInputFood} />
+          <input
+            type="text"
+            className="inputFoodForm"
+            value={userinputFood}
+            onChange={handleUserInputFood}
+          />
         </label>
       </form>
-    )
+    );
   }
 }
 
-
 function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
-  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender)
-  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height)
-  const [ageInputValue, setageInputValue] = useState(userInfo.Age)
-  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight)
+  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender);
+  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height);
+  const [ageInputValue, setageInputValue] = useState(userInfo.Age);
+  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight);
 
   function handleUserEditGender(event) {
-    setgenderInputValue(event.target.value)
+    setgenderInputValue(event.target.value);
   }
 
   function handleUserEditHeight(event) {
-    setHeightInputValue(event.target.value)
+    setHeightInputValue(event.target.value);
   }
 
   function handleUserEditAge(event) {
-    setageInputValue(event.target.value)
+    setageInputValue(event.target.value);
   }
 
   function handleUserEditWeight(event) {
-    setweightInputValue(event.target.value)
+    setweightInputValue(event.target.value);
   }
 
   function submitEditForm(event) {
-    console.log("Submit clicked")
-    event.preventDefault()
-    setuserInfo({ ...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue })
-    setIsEditButtonClicked(false)
+    console.log("Submit clicked");
+    event.preventDefault();
+    setuserInfo({
+      ...userInfo,
+      Gender: genderInputValue,
+      Height: heightInputValue,
+      Age: ageInputValue,
+      Weight: weightInputValue,
+    });
+    setIsEditButtonClicked(false);
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked")
-    setIsEditButtonClicked(false)
+    console.log("Cancel clicked");
+    setIsEditButtonClicked(false);
   }
 
   return (
@@ -196,88 +253,132 @@ function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
         <form onSubmit={submitEditForm}>
           <label>
             Gender:
-            <input className="editLabel" type="text" value={genderInputValue} onChange={handleUserEditGender} />
+            <input
+              className="editLabel"
+              type="text"
+              value={genderInputValue}
+              onChange={handleUserEditGender}
+            />
           </label>
           <br />
           <label>
             Age:
-            <input className="editLabel" type="text" value={ageInputValue} onChange={handleUserEditAge} />
+            <input
+              className="editLabel"
+              type="text"
+              value={ageInputValue}
+              onChange={handleUserEditAge}
+            />
           </label>
           <br />
           <label>
             Height In Inches:
-            <input className="editLabel" type="text" value={heightInputValue} onChange={handleUserEditHeight} />
+            <input
+              className="editLabel"
+              type="text"
+              value={heightInputValue}
+              onChange={handleUserEditHeight}
+            />
           </label>
           <br />
           <label>
             Weight:
-            <input className="editLabel" type="text" value={weightInputValue} onChange={handleUserEditWeight} />
+            <input
+              className="editLabel"
+              type="text"
+              value={weightInputValue}
+              onChange={handleUserEditWeight}
+            />
           </label>
         </form>
         <div className="cancelAndSubmitButtons">
           <button onClick={handleCancelClick}> Cancel </button>
           <button onClick={submitEditForm}>Submit</button>
         </div>
-
       </div>
     </div>
   );
 }
 
-
-function CreateAccount({ userInfo, setuserInfo, setIsSignUpButtonClicked, setuserSignedIn, setuserAccountInfo }) {
-  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender)
-  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height)
-  const [ageInputValue, setageInputValue] = useState(userInfo.Age)
-  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight)
-  const [nameInputValue, setnameInputValue] = useState("")
-  const [emailInputValue, setemailInputValue] = useState("")
-  const [passwordInputValue, setpasswordInputValue] = useState("")
-
+function CreateAccount({
+  userInfo,
+  setuserInfo,
+  setIsSignUpButtonClicked,
+  setuserSignedIn,
+  setuserAccountInfo,
+}) {
+  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender);
+  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height);
+  const [ageInputValue, setageInputValue] = useState(userInfo.Age);
+  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight);
+  const [nameInputValue, setnameInputValue] = useState("");
+  const [emailInputValue, setemailInputValue] = useState("");
+  const [passwordInputValue, setpasswordInputValue] = useState("");
 
   function handleUserEditName(event) {
-    setnameInputValue(event.target.value)
+    setnameInputValue(event.target.value);
   }
 
   function handleUserEditEmail(event) {
-    setemailInputValue(event.target.value)
+    setemailInputValue(event.target.value);
   }
 
   function handleUserEditPassword(event) {
-    setpasswordInputValue(event.target.value)
+    setpasswordInputValue(event.target.value);
   }
 
   function handleUserEditGender(event) {
-    setgenderInputValue(event.target.value)
+    setgenderInputValue(event.target.value);
   }
 
   function handleUserEditHeight(event) {
-    setHeightInputValue(event.target.value)
+    setHeightInputValue(event.target.value);
   }
 
   function handleUserEditAge(event) {
-    setageInputValue(event.target.value)
+    setageInputValue(event.target.value);
   }
 
   function handleUserEditWeight(event) {
-    setweightInputValue(event.target.value)
+    setweightInputValue(event.target.value);
   }
 
+  async function submitEditForm(event) {
+    console.log("Submit clicked");
 
+    // TODO: HERE
+    let userInfo = {
+      name: nameInputValue,
+      emial: emailInputValue,
+      password: passwordInputValue,
+      gender: genderInputValue,
+      age: ageInputValue,
+      height: heightInputValue,
+      weightInputValue,
+    };
 
-  function submitEditForm(event) {
-    console.log("Submit clicked")
-    event.preventDefault()
-    setuserInfo({ ...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue })
-    setuserAccountInfo({ Name: nameInputValue, Email: emailInputValue, Password: passwordInputValue })
-    setIsSignUpButtonClicked(false)
-    setuserSignedIn(true)
+    const data = await registerUserCall();
 
+    event.preventDefault();
+    setuserInfo({
+      ...userInfo,
+      Gender: genderInputValue,
+      Height: heightInputValue,
+      Age: ageInputValue,
+      Weight: weightInputValue,
+    });
+    setuserAccountInfo({
+      Name: nameInputValue,
+      Email: emailInputValue,
+      Password: passwordInputValue,
+    });
+    setIsSignUpButtonClicked(false);
+    setuserSignedIn(true);
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked")
-    setIsSignUpButtonClicked(false)
+    console.log("Cancel clicked");
+    setIsSignUpButtonClicked(false);
   }
 
   return (
@@ -287,90 +388,130 @@ function CreateAccount({ userInfo, setuserInfo, setIsSignUpButtonClicked, setuse
         <form>
           <label>
             Name:
-            <input className="editLabel" type="text" value={nameInputValue} onChange={handleUserEditName} />
+            <input
+              className="editLabel"
+              type="text"
+              value={nameInputValue}
+              onChange={handleUserEditName}
+            />
           </label>
           <br />
           <label>
             Email:
-            <input className="editLabel" type="text" value={emailInputValue} onChange={handleUserEditEmail} />
+            <input
+              className="editLabel"
+              type="text"
+              value={emailInputValue}
+              onChange={handleUserEditEmail}
+            />
           </label>
           <br />
           <label>
             Password:
-            <input className="editLabel" type="text" value={passwordInputValue} onChange={handleUserEditPassword} />
+            <input
+              className="editLabel"
+              type="text"
+              value={passwordInputValue}
+              onChange={handleUserEditPassword}
+            />
           </label>
           <br />
         </form>
       </div>
       <div className="editOptions">
-        <h3 id="signupInput" className="editInfoHeader"> Input Your Information </h3>
+        <h3 id="signupInput" className="editInfoHeader">
+          {" "}
+          Input Your Information{" "}
+        </h3>
         <form onSubmit={submitEditForm}>
           <label>
             Gender:
-            <input className="editLabel" type="text" value={genderInputValue} onChange={handleUserEditGender} />
+            <input
+              className="editLabel"
+              type="text"
+              value={genderInputValue}
+              onChange={handleUserEditGender}
+            />
           </label>
           <br />
           <label>
             Age:
-            <input className="editLabel" type="text" value={ageInputValue} onChange={handleUserEditAge} />
+            <input
+              className="editLabel"
+              type="text"
+              value={ageInputValue}
+              onChange={handleUserEditAge}
+            />
           </label>
           <br />
           <label>
             Height In Inches:
-            <input className="editLabel" type="text" value={heightInputValue} onChange={handleUserEditHeight} />
+            <input
+              className="editLabel"
+              type="text"
+              value={heightInputValue}
+              onChange={handleUserEditHeight}
+            />
           </label>
           <br />
           <label>
             Weight:
-            <input className="editLabel" type="text" value={weightInputValue} onChange={handleUserEditWeight} />
+            <input
+              className="editLabel"
+              type="text"
+              value={weightInputValue}
+              onChange={handleUserEditWeight}
+            />
           </label>
         </form>
         <div className="cancelAndSubmitButtons">
           <button onClick={handleCancelClick}> Cancel </button>
           <button onClick={submitEditForm}>Submit</button>
         </div>
-
       </div>
     </div>
-
-
   );
 }
 
-function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, setuserSignedIn, setrecommendedNutrition, setIsLoginButtonClicked }) {
-  const [nameInputValue, setnameInputValue] = useState("")
-  const [emailInputValue, setemailInputValue] = useState("")
-  const [passwordInputValue, setpasswordInputValue] = useState("")
-
+function LoginForm({
+  setuserInfo,
+  setuserAccountInfo,
+  setIsSignUpButtonClicked,
+  setuserSignedIn,
+  setrecommendedNutrition,
+  setIsLoginButtonClicked,
+}) {
+  const [nameInputValue, setnameInputValue] = useState("");
+  const [emailInputValue, setemailInputValue] = useState("");
+  const [passwordInputValue, setpasswordInputValue] = useState("");
 
   function handleUserEditName(event) {
-    setnameInputValue(event.target.value)
+    setnameInputValue(event.target.value);
   }
 
   function handleUserEditEmail(event) {
-    setemailInputValue(event.target.value)
+    setemailInputValue(event.target.value);
   }
 
   function handleUserEditPassword(event) {
-    setpasswordInputValue(event.target.value)
+    setpasswordInputValue(event.target.value);
   }
 
   function submitEditForm(event) {
-    console.log("Submit clicked")
-    event.preventDefault()
+    console.log("Submit clicked");
+    event.preventDefault();
     /* TODO: NEED TO CONNECT WITH BACKEND 
     setuserInfo({...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue})
     setuserAccountInfo({Name: nameInputValue,  Email: emailInputValue,  Password: passwordInputValue}) */
-    setIsSignUpButtonClicked(false)
-    setuserSignedIn(true)
-    setIsLoginButtonClicked(false)
-
+    setIsSignUpButtonClicked(false);
+    setuserSignedIn(true);
+    setIsLoginButtonClicked(false);
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked")
-    setIsSignUpButtonClicked(false)
-    setIsLoginButtonClicked(false)
+    console.log("Cancel clicked");
+    setIsSignUpButtonClicked(false);
+    setIsLoginButtonClicked(false);
   }
 
   return (
@@ -380,17 +521,32 @@ function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, 
         <form>
           <label>
             Name:
-            <input className="editLabel" type="text" value={nameInputValue} onChange={handleUserEditName} />
+            <input
+              className="editLabel"
+              type="text"
+              value={nameInputValue}
+              onChange={handleUserEditName}
+            />
           </label>
           <br />
           <label>
             Email:
-            <input className="editLabel" type="text" value={emailInputValue} onChange={handleUserEditEmail} />
+            <input
+              className="editLabel"
+              type="text"
+              value={emailInputValue}
+              onChange={handleUserEditEmail}
+            />
           </label>
           <br />
           <label>
             Password:
-            <input className="editLabel" type="text" value={passwordInputValue} onChange={handleUserEditPassword} />
+            <input
+              className="editLabel"
+              type="text"
+              value={passwordInputValue}
+              onChange={handleUserEditPassword}
+            />
           </label>
           <br />
         </form>
@@ -400,94 +556,116 @@ function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, 
         <button onClick={submitEditForm}>Submit</button>
       </div>
     </div>
-
-
   );
 }
 
 function App(props) {
-  const [isLoginButtonClicked, setIsLoginButtonClicked] = useState(false)
-  const [isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false)
-  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
-  const [userSignedIn, setuserSignedIn] = useState(false)
-  const [userinputFood, setuserinputFood] = useState("")
+  const [isLoginButtonClicked, setIsLoginButtonClicked] = useState(false);
+  const [isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false);
+  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false);
+  const [userSignedIn, setuserSignedIn] = useState(false);
+  const [userinputFood, setuserinputFood] = useState("");
   // foodEaten: [ {Name: Apple, Calories: ..., Carbohydrates: ..., }, {Name: Orange, Calories: ..., } ]
-  const [foodEaten, setfoodEaten] = useState([])
-  const [recommendedNutrition, setrecommendedNutrition] = useState({ Calories: 10, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
-  const [nutrientsEaten, setNutrientsEaten] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
-  const [recommendedFoods, updateFoods] = useState({ Apple: { Calories: 1 }, Hi: { Calories: 2 }, Orange: { Calories: 3 }, Bye: { Calories: 4 } })
+  const [foodEaten, setfoodEaten] = useState([]);
+  const [recommendedNutrition, setrecommendedNutrition] = useState({
+    Calories: 10,
+    Carbohydrates: 0,
+    Fiber: 0,
+    Protein: 0,
+    Fat: 0,
+    Water: 0,
+  });
+  const [nutrientsEaten, setNutrientsEaten] = useState({
+    Calories: 0,
+    Carbohydrates: 0,
+    Fiber: 0,
+    Protein: 0,
+    Fat: 0,
+    Water: 0,
+  });
+  const [recommendedFoods, updateFoods] = useState({
+    Apple: { Calories: 1 },
+    Hi: { Calories: 2 },
+    Orange: { Calories: 3 },
+    Bye: { Calories: 4 },
+  });
   /* UserInfo dictionary may need to be updated based on backend */
-  const [userInfo, setuserInfo] = useState({ Gender: "", Height: "", Weight: "", Age: "" })
-  const [userAccountInfo, setuserAccountInfo] = useState({ Username: "", Password: "", Email: "" })
+  const [userInfo, setuserInfo] = useState({
+    Gender: "",
+    Height: "",
+    Weight: "",
+    Age: "",
+  });
+  const [userAccountInfo, setuserAccountInfo] = useState({
+    Username: "",
+    Password: "",
+    Email: "",
+  });
 
   function handleUserInputFood(event) {
-    setuserinputFood(event.target.value)
+    setuserinputFood(event.target.value);
   }
 
   function handleUserInputFormSubmit(event) {
     // Need to add access database stuff here
     // REMOVE LATER
-    event.preventDefault()
-    foodEaten[userinputFood] = "TEST"
-    let userFood = {Name: userinputFood, Calories: ""}
-    setfoodEaten([...foodEaten, userFood])
+    event.preventDefault();
+    foodEaten[userinputFood] = "TEST";
+    let userFood = { Name: userinputFood, Calories: "" };
+    setfoodEaten([...foodEaten, userFood]);
   }
 
   /* TODO: Need to implement */
   function handleEditClick(event) {
-    console.log("Edit clicked")
-    setIsEditButtonClicked(true)
-
+    console.log("Edit clicked");
+    setIsEditButtonClicked(true);
   }
 
   /* TODO: Need to implement */
   function handleLogoutClick(event) {
-    console.log("Logout clicked")
+    console.log("Logout clicked");
     // REMOVE LATER
     // setIsEditButtonClicked(false)
-    setuserSignedIn(false)
-    setIsSignUpButtonClicked(false)
-    setIsEditButtonClicked(false)
+    setuserSignedIn(false);
+    setIsSignUpButtonClicked(false);
+    setIsEditButtonClicked(false);
   }
 
   function handleLoginClick(event) {
-    console.log("Login Clicked")
-    setIsSignUpButtonClicked(false)
-    setIsLoginButtonClicked(true)
-
+    console.log("Login Clicked");
+    setIsSignUpButtonClicked(false);
+    setIsLoginButtonClicked(true);
   }
 
   // add the items that you clicked on
   function handleFoodClick(food) {
-    // get the nutrients of the food that you clicke on 
-    const food_nutrients = recommendedFoods[food]
+    // get the nutrients of the food that you clicke on
+    const food_nutrients = recommendedFoods[food];
 
     // food_nurients = {Calories: 43, Protein: 10}
-    console.log(food_nutrients)
+    console.log(food_nutrients);
 
     // loop through nutrients of that food that you added
     for (const nutrient in food_nutrients) {
-      console.log(nutrient)
+      console.log(nutrient);
 
       // prints number 11 -> Calories:11
       // console.log(food_nutrients[nutrient])
 
-      const num_nutrient = food_nutrients[nutrient]
+      const num_nutrient = food_nutrients[nutrient];
 
       // console.log(nutrientsEaten)
 
       // added those nutrients by looping thru nutrients consumer
 
-      const new_value = nutrientsEaten[nutrient] + num_nutrient
+      const new_value = nutrientsEaten[nutrient] + num_nutrient;
 
-      setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value })
+      setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value });
 
       // console.log(nutrientsEaten)
-
     }
 
     // console.log(food)
-
   }
 
   return (
@@ -503,42 +681,103 @@ function App(props) {
             <button className="logoutButton" onClick={handleLogoutClick}>
               Logout
             </button>
-          </div>) : <div className="navigation"> <button className="logoutButton" onClick={handleLoginClick}> Login </button> </div>}
+          </div>
+        ) : (
+          <div className="navigation">
+            {" "}
+            <button className="logoutButton" onClick={handleLoginClick}>
+              {" "}
+              Login{" "}
+            </button>{" "}
+          </div>
+        )}
       </div>
       {isLoginButtonClicked ? (
         // setUserInfo, setuserAccountInfo, setIsSignUpButtonClicked, setuserSignedIn, setrecommendedNutrition, setIsLoginButtonClicked
-        <LoginForm setuserInfo={setuserInfo} setuserAccountInfo={setuserAccountInfo} setIsSignUpButtonClicked={setIsSignUpButtonClicked} setuserSignedIn={setuserSignedIn} setrecommendedNutrition={setrecommendedNutrition} setIsLoginButtonClicked={setIsLoginButtonClicked} />
+        <LoginForm
+          setuserInfo={setuserInfo}
+          setuserAccountInfo={setuserAccountInfo}
+          setIsSignUpButtonClicked={setIsSignUpButtonClicked}
+          setuserSignedIn={setuserSignedIn}
+          setrecommendedNutrition={setrecommendedNutrition}
+          setIsLoginButtonClicked={setIsLoginButtonClicked}
+        />
       ) : null}
       {isEditButtonClicked ? (
-        <EditForm userInfo={userInfo} setuserInfo={setuserInfo} setIsEditButtonClicked={setIsEditButtonClicked} />
+        <EditForm
+          userInfo={userInfo}
+          setuserInfo={setuserInfo}
+          setIsEditButtonClicked={setIsEditButtonClicked}
+        />
       ) : null}
       {isSignUpButtonClicked ? (
-        <CreateAccount userInfo={userInfo} setuserInfo={setuserInfo} setIsSignUpButtonClicked={setIsSignUpButtonClicked} setuserSignedIn={setuserSignedIn} setuserAccountInfo={setuserAccountInfo} />
+        <CreateAccount
+          userInfo={userInfo}
+          setuserInfo={setuserInfo}
+          setIsSignUpButtonClicked={setIsSignUpButtonClicked}
+          setuserSignedIn={setuserSignedIn}
+          setuserAccountInfo={setuserAccountInfo}
+        />
       ) : null}
-      <div className="bodyOne" style={{ display: isEditButtonClicked || isSignUpButtonClicked || isLoginButtonClicked ? 'none' : 'block' }}>
+      <div
+        className="bodyOne"
+        style={{
+          display:
+            isEditButtonClicked || isSignUpButtonClicked || isLoginButtonClicked
+              ? "none"
+              : "block",
+        }}
+      >
         <div className="improveHeadline">
           <h1 id="improveNutrition">Improve your Nutrition</h1>
-          <h2 id="improveDes">Using the foods you've eaten, we calculate what nutrients you lack or have in excess</h2>
+          <h2 id="improveDes">
+            Using the foods you've eaten, we calculate what nutrients you lack
+            or have in excess
+          </h2>
         </div>
         <div className="doctorImage">
           <img src={Image} alt="DoctorImage" />
         </div>
-        <SignUpButton userSignedIn={userSignedIn} setIsSignUpButtonClicked={setIsSignUpButtonClicked} />
+        <SignUpButton
+          userSignedIn={userSignedIn}
+          setIsSignUpButtonClicked={setIsSignUpButtonClicked}
+        />
       </div>
 
-      <div className="signedInContent" style={{ display: isEditButtonClicked || !userSignedIn ? 'none' : 'block' }}>
-        <div className="inputFood" >
-          <FoodInputForm userSignedIn={userSignedIn} userinputFood={userinputFood} handleUserInputFood={handleUserInputFood} handleUserInputFormSubmit={handleUserInputFormSubmit} />
+      <div
+        className="signedInContent"
+        style={{
+          display: isEditButtonClicked || !userSignedIn ? "none" : "block",
+        }}
+      >
+        <div className="inputFood">
+          <FoodInputForm
+            userSignedIn={userSignedIn}
+            userinputFood={userinputFood}
+            handleUserInputFood={handleUserInputFood}
+            handleUserInputFormSubmit={handleUserInputFormSubmit}
+          />
         </div>
-        <RecommendedNutrients userSignedIn={userSignedIn} recommendedNutrition={recommendedNutrition} />
+        <RecommendedNutrients
+          userSignedIn={userSignedIn}
+          recommendedNutrition={recommendedNutrition}
+        />
         <FoodsEatenToday userSignedIn={userSignedIn} foodsEaten={foodEaten} />
-        <NutrientsEaten userSignedIn={userSignedIn} nutrientsEaten={nutrientsEaten} recommendedNutrition={recommendedNutrition} />
-        <RecommendedFoods userSignedIn={userSignedIn} recommendedFoods={recommendedFoods} recommendedNutrition={recommendedNutrition} nutrientsEaten={nutrientsEaten} handleFoodClick={handleFoodClick} />
+        <NutrientsEaten
+          userSignedIn={userSignedIn}
+          nutrientsEaten={nutrientsEaten}
+          recommendedNutrition={recommendedNutrition}
+        />
+        <RecommendedFoods
+          userSignedIn={userSignedIn}
+          recommendedFoods={recommendedFoods}
+          recommendedNutrition={recommendedNutrition}
+          nutrientsEaten={nutrientsEaten}
+          handleFoodClick={handleFoodClick}
+        />
       </div>
     </div>
   );
-
-
 }
 
 export default App;
