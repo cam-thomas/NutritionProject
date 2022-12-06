@@ -32,6 +32,13 @@ export const existing_users = [
   }
 ]
 
+export const EditedEricaNutrients = {
+  calories: 2150,
+  carbs: 242,
+  protein: 60,
+  fat: 48
+}
+// Erica's initial things
 // {
 //   name: 'Erica',
 //   email: 'erica123@gmail.com',
