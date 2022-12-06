@@ -5,7 +5,6 @@ import logo from './logo.svg';
 import './App.css';
 import Image from "./doctor.png"
 
-/* NOTE: EDIT BUTTON AND LOGOUT BUTTONS ARE STILL BEING IMPLEMENTED */
 
 // WE NEED TO ADD NUTRIENTS OF FOOD EATEN TO NUTRIENTS EATEN TODAY WHEN WE PULL FROM DATA BASE
 function FoodsEatenToday({ userSignedIn, foodsEaten }) {
