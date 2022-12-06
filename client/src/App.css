@@ -52,6 +52,7 @@
   height: 200px;
 }
 
+
 .foodsEatenHeader {
   border-style: none;
   border-radius: 15px;
@@ -60,6 +61,14 @@
   color: white;
   position: relative;
   left: 20px;
+}
+
+.recFoodsHeader {
+  color: grey;
+  position: relative;
+  left: 15px;
+  font-size: 35px;
+  font-weight: bold;
 }
 
 
@@ -93,10 +102,29 @@
   
 }
 
+.recFoodList {
+  font-size: 20px;
+  padding: 5px;
+}
+
 .recommendedNutrients {
   position: absolute;
   margin-left: 60px;
   top: 200px;
+}
+
+.foodsEaten {
+  position: absolute;
+  left: 700px;
+  top: 200px;
+  width: 350px;
+}
+
+.recommendedFoods {
+  position: absolute;
+  left: 700px;
+  top: 750px;
+  width: 350px;
 }
 
 .nutrientRequirementAchieved {
