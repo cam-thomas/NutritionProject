@@ -306,6 +306,10 @@ function CreateAccount({
   setIsSignUpButtonClicked,
   setuserSignedIn,
   setuserAccountInfo,
+  setrecommendedNutrition,
+  setNutrientsEaten,
+  setRecommendedFoods
+  
 }) {
   const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender);
   const [heightInputValue, setHeightInputValue] = useState(userInfo.Height);
@@ -374,6 +378,9 @@ function CreateAccount({
     });
     setIsSignUpButtonClicked(false);
     setuserSignedIn(true);
+
+    setrecommendedNutrition({...data.dailyNutrients})
+
   }
 
   function handleCancelClick(event) {
@@ -583,7 +590,7 @@ function App(props) {
     Fat: 0,
     Water: 0,
   });
-  const [recommendedFoods, updateFoods] = useState({
+  const [recommendedFoods, setRecommendedFoods] = useState({
     Apple: { Calories: 1 },
     Hi: { Calories: 2 },
     Orange: { Calories: 3 },
@@ -717,6 +724,10 @@ function App(props) {
           setIsSignUpButtonClicked={setIsSignUpButtonClicked}
           setuserSignedIn={setuserSignedIn}
           setuserAccountInfo={setuserAccountInfo}
+          setrecommendedNutrition={setrecommendedNutrition}
+          setNutrientsEaten={setNutrientsEaten}
+          setRecommendedFoods={setRecommendedFoods}
+          
         />
       ) : null}
       <div
