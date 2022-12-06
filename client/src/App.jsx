@@ -38,7 +38,7 @@ function RecommendedNutrients({ userSignedIn, recommendedNutrition }) {
         <ul className="list-group">
           {Object.keys(recommendedNutrition).map((key, index) => (
             <li className="recNutrientsList">
-              {key + ":"} {recommendedNutrition[key]}
+              {key + ":"} {recommendedNutrition[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
             </li>
           ))}
         </ul>
@@ -106,14 +106,14 @@ function NutrientsEaten({ userSignedIn, nutrientsEaten, recommendedNutrition }) 
             if (nutrientsEaten[key] >= recommendedNutrition[key]) {
               return (
                 <li key={key} className="nutrientRequirementAchieved">
-                  {key + ":"} {nutrientsEaten[key]}
+                  {key + ":"} {nutrientsEaten[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
                 </li>
               );
             }
             else {
               return (
                 <li key={key} className="nutrientsEatenList">
-                  {key + ":"} {nutrientsEaten[key]}
+                  {key + ":"} {nutrientsEaten[key]} {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
                 </li>
               );
             }
@@ -377,7 +377,7 @@ function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, 
   return (
     <div className="editInfo">
       <div className="inputAccountInfo">
-        <h3 className="createAccountHeader"> Create Your Account</h3>
+        <h3 className="createAccountHeader"> Login </h3>
         <form>
           <label>
             Name:
@@ -414,7 +414,7 @@ function App(props) {
   const [userinputFood, setuserinputFood] = useState("")
   // foodEaten: {apple : {Calories: ..., Carbohydrates: ..., }}
   const [foodEaten, setfoodEaten] = useState({})
-  const [recommendedNutrition, setrecommendedNutrition] = useState({ Calories: 10, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
+  const [recommendedNutrition, setrecommendedNutrition] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
   const [nutrientsEaten, setNutrientsEaten] = useState({ Calories: 0, Carbohydrates: 0, Fiber: 0, Protein: 0, Fat: 0, Water: 0 })
   const [recommendedFoods, updateFoods] = useState({ Apple: { Calories: 1 }, Hi: { Calories: 2 }, Orange: { Calories: 3 }, Bye: { Calories: 4 } })
   /* UserInfo dictionary may need to be updated based on backend */
