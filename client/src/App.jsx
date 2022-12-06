@@ -279,9 +279,76 @@ function CreateAccount({userInfo, setuserInfo, setIsSignUpButtonClicked, setuser
   );
 }
 
+function LoginForm({setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, setuserSignedIn, setrecommendedNutrition, setIsLoginButtonClicked}) {
+  const [nameInputValue, setnameInputValue] = useState("")
+  const [emailInputValue, setemailInputValue] = useState("")
+  const [passwordInputValue, setpasswordInputValue] = useState("")
 
+
+  function handleUserEditName(event) {
+    setnameInputValue(event.target.value)
+  }
+
+  function handleUserEditEmail(event) {
+    setemailInputValue(event.target.value)
+  }
+
+  function handleUserEditPassword(event) {
+    setpasswordInputValue(event.target.value)
+  }
+
+  function submitEditForm(event) {
+    console.log("Submit clicked")
+    event.preventDefault()
+    /* TODO: NEED TO CONNECT WITH BACKEND 
+    setuserInfo({...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue})
+    setuserAccountInfo({Name: nameInputValue,  Email: emailInputValue,  Password: passwordInputValue}) */
+    setIsSignUpButtonClicked(false)
+    setuserSignedIn(true)
+    setIsLoginButtonClicked(false)
+    
+  }
+
+  function handleCancelClick(event) {
+    console.log("Cancel clicked")
+    setIsSignUpButtonClicked(false)
+    setIsLoginButtonClicked(false)
+  }
+
+  return (
+    <div className="editInfo"> 
+      <div className="inputAccountInfo">
+          <h3 className="createAccountHeader"> Create Your Account</h3>
+          <form> 
+            <label>
+              Name:
+              <input className="editLabel" type="text" value={nameInputValue} onChange={handleUserEditName}/>
+            </label>
+            <br/>
+            <label>
+              Email:
+              <input className="editLabel" type="text" value={emailInputValue} onChange={handleUserEditEmail} />
+            </label>
+            <br/>
+            <label>
+              Password:
+              <input className="editLabel" type="text" value={passwordInputValue} onChange={handleUserEditPassword}/>
+            </label>
+            <br/>
+          </form>
+      </div>
+      <div className="cancelAndSubmitButtons">
+          <button onClick={handleCancelClick}> Cancel </button>
+          <button onClick={submitEditForm}>Submit</button>
+      </div>
+    </div>
+
+    
+  );
+}
 
 function App(props) {
+  const[isLoginButtonClicked, setIsLoginButtonClicked] = useState(false)
   const[isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false)
   const [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
   const [userSignedIn, setuserSignedIn] = useState(false)
@@ -323,6 +390,13 @@ function App(props) {
     setIsEditButtonClicked(false)
   }
 
+  function handleLoginClick(event) {
+    console.log("Login Clicked")
+    setIsSignUpButtonClicked(false)
+    setIsLoginButtonClicked(true)
+
+  }
+
   return (
     <div className="App">
       <div className="topHeader">
@@ -336,15 +410,19 @@ function App(props) {
           <button className="logoutButton" onClick={handleLogoutClick}>
             Logout
           </button>
-        </div>) : <div className="navigation"> <button className="logoutButton"> Login </button> </div>}
+        </div>) : <div className="navigation"> <button className="logoutButton" onClick={handleLoginClick}> Login </button> </div>}
       </div>
+      {isLoginButtonClicked ? (
+        // setUserInfo, setuserAccountInfo, setIsSignUpButtonClicked, setuserSignedIn, setrecommendedNutrition, setIsLoginButtonClicked
+        <LoginForm setuserInfo={setuserInfo} setuserAccountInfo={setuserAccountInfo} setIsSignUpButtonClicked={setIsSignUpButtonClicked} setuserSignedIn={setuserSignedIn} setrecommendedNutrition={setrecommendedNutrition} setIsLoginButtonClicked={setIsLoginButtonClicked} />
+      ) : null}
       {isEditButtonClicked ? (
         <EditForm userInfo={userInfo} setuserInfo={setuserInfo} setIsEditButtonClicked={setIsEditButtonClicked} />
       ) : null}
       {isSignUpButtonClicked ? (
         <CreateAccount userInfo={userInfo} setuserInfo={setuserInfo} setIsSignUpButtonClicked={setIsSignUpButtonClicked} setuserSignedIn={setuserSignedIn} setuserAccountInfo={setuserAccountInfo}/>
       ) : null}
-      <div className="bodyOne" style={{display : isEditButtonClicked || isSignUpButtonClicked ? 'none' : 'block'}}>
+      <div className="bodyOne" style={{display : isEditButtonClicked || isSignUpButtonClicked || isLoginButtonClicked? 'none' : 'block'}}>
         <div className="improveHeadline">
           <h1 id="improveNutrition">Improve your Nutrition</h1>
           <h2 id="improveDes">Using the foods you've eaten, we calculate what nutrients you lack or have in excess</h2>
