@@ -78,7 +78,7 @@ export const registerUserCall = async (userInfo) => {
 // };
 export const loginUserCall = async (loginCreds) => {
   const res = await fetch('http://localhost:8080/api/v1/auth/login', {
-    method: 'get',
+    method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(loginCreds)
   })

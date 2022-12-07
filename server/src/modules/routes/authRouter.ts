@@ -7,7 +7,7 @@ import { createUserHandler } from '../controllers/createUser'
 export default express
   .Router()
   // create user -> middleware ensures req body has needed info
-  .get('/login', loginHandler)
+  .post('/login', loginHandler)
   .get('/logout', logOutHandler)
   // get user
   .post('/register', createUserHandler)
