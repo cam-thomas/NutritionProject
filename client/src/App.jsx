@@ -625,7 +625,7 @@ function App(props) {
     //   Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
     setNutrientsEaten({...data.nutrients})
     setRecommendedFoods([...data.recommendedFoods])
-    setfoodEaten([...foodEaten, {foodName: userinputFood, Calories: data.nutrients.Calories}])
+    setfoodEaten([...data.foodsEaten])
   }
 
   /* TODO: Need to implement */
@@ -691,7 +691,7 @@ function App(props) {
     //   Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
     setNutrientsEaten({...data.nutrients})
     setRecommendedFoods([...data.recommendedFoods])
-    setfoodEaten([...foodEaten, {foodName: food.foodName, Calories: data.nutrients.Calories}])
+    setfoodEaten([...data.foodsEaten])
 
   }
 
