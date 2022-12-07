@@ -22,7 +22,7 @@ function FoodsEatenToday({ userSignedIn, foodsEaten }) {
           {foodsEaten.map((food) => (
             <li className="recNutrientsList">
               {/* change it to foodsEaten[key]["calories"] after backend implemented */}
-              {food.Name + ':'} {food.Calories} Calories
+              {food.foodName + ':'} {food.Calories} Calories
             </li>
           ))}
         </ul>
@@ -358,11 +358,9 @@ function CreateAccount({
     setIsSignUpButtonClicked(false)
     setuserSignedIn(true)
 
-    setrecommendedNutrition({Calories: data.dailyNutrients.calories, Carbohydrates: data.dailyNutrients.carbs, Fiber: data.dailyNutrients.fiber, 
-      Protein: data.dailyNutrients.protein, Fat: data.dailyNutrients.fat })
+    setrecommendedNutrition({...data.dailyNutrients})
 
-    setNutrientsEaten({Calories: data.currentNutrients.calories, Carbohydrates: data.currentNutrients.carbs, Fiber: data.currentNutrients.fiber, 
-      Protein: data.currentNutrients.protein, Fat: data.currentNutrients.fat })
+    setNutrientsEaten({...data.currentNutrients })
     
     setRecommendedFoods([...data.recommendedFoods])
 
@@ -471,7 +469,9 @@ function LoginForm({
   setIsSignUpButtonClicked,
   setuserSignedIn,
   setrecommendedNutrition,
-  setIsLoginButtonClicked
+  setIsLoginButtonClicked,
+  setNutrientsEaten,
+  setRecommendedFoods
 }) {
   const [nameInputValue, setnameInputValue] = useState('')
   const [emailInputValue, setemailInputValue] = useState('')
@@ -489,15 +489,27 @@ function LoginForm({
     setpasswordInputValue(event.target.value)
   }
 
-  function submitEditForm(event) {
+  async function submitEditForm(event) {
     console.log('Submit clicked')
     event.preventDefault()
+    let loginCreds = {
+      email: emailInputValue,
+      password: passwordInputValue
+    }
+    const data = await loginUserCall(loginCreds)
     /* TODO: NEED TO CONNECT WITH BACKEND 
     setuserInfo({...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue})
     setuserAccountInfo({Name: nameInputValue,  Email: emailInputValue,  Password: passwordInputValue}) */
     setIsSignUpButtonClicked(false)
     setuserSignedIn(true)
     setIsLoginButtonClicked(false)
+
+    // Get Data from Backend
+    setrecommendedNutrition({...data.dailyNutrients})
+
+    setNutrientsEaten({...data.currentNutrients })
+    
+    setRecommendedFoods([...data.recommendedFoods])
   }
 
   function handleCancelClick(event) {
@@ -603,18 +615,18 @@ function App(props) {
   }
 
   async function handleUserInputFormSubmit(event) {
-    // Need to add access database stuff here
-    // REMOVE LATER
     event.preventDefault()
     let inputFoodData = {
       addedFood: userinputFood
     }
     console.log("Sending food input to database: ", inputFoodData)
     const data = await addFoodCall(inputFoodData)
-    setNutrientsEaten({Calories: data.currentNutrients.calories, Carbohydrates: data.currentNutrients.carbs, Fiber: data.currentNutrients.fiber, 
-      Protein: data.currentNutrients.protein, Fat: data.currentNutrients.fat })
+    setNutrientsEaten({Calories: nutrientsEaten.Calories + data.nutrients.Calories, Carbohydrates: nutrientsEaten.Carbohydrates + data.nutrients.Carbohydrates,
+      Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
     setRecommendedFoods([...data.recommendedFoods])
-    setfoodEaten([...foodEaten, {userinputFood: data.nutrients}])
+    // let newFoodObj = {}
+    // newFoodObj[userinputFood] = data.nutrients.Calories
+    setfoodEaten([...foodEaten, {foodName: userinputFood, Calories: data.nutrients.Calories}])
   }
 
   /* TODO: Need to implement */
@@ -632,6 +644,8 @@ function App(props) {
     setuserSignedIn(false)
     setIsSignUpButtonClicked(false)
     setIsEditButtonClicked(false)
+    setIsLoginButtonClicked(false)
+
   }
 
   function handleLoginClick(event) {
@@ -704,6 +718,8 @@ function App(props) {
           setuserSignedIn={setuserSignedIn}
           setrecommendedNutrition={setrecommendedNutrition}
           setIsLoginButtonClicked={setIsLoginButtonClicked}
+          setNutrientsEaten={setNutrientsEaten}
+          setRecommendedFoods={setRecommendedFoods}
         />
       ) : null}
       {isEditButtonClicked ? (
