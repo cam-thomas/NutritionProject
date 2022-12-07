@@ -94,7 +94,7 @@ function RecommendedFoods({
           ? null
           : recommendedFoods.map((food) => (
               <ul className="recFoodList">
-                <button onClick={() => handleFoodClick(food.foodName)}>{food.foodName}</button>
+                <button onClick={() => handleFoodClick(food)}>{food.foodName}</button>
               </ul>
             ))}
       </div>
@@ -621,11 +621,10 @@ function App(props) {
     }
     console.log("Sending food input to database: ", inputFoodData)
     const data = await addFoodCall(inputFoodData)
-    setNutrientsEaten({Calories: nutrientsEaten.Calories + data.nutrients.Calories, Carbohydrates: nutrientsEaten.Carbohydrates + data.nutrients.Carbohydrates,
-      Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
+    // setNutrientsEaten({Calories: nutrientsEaten.Calories + data.nutrients.Calories, Carbohydrates: nutrientsEaten.Carbohydrates + data.nutrients.Carbohydrates,
+    //   Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
+    setNutrientsEaten({...data.nutrients})
     setRecommendedFoods([...data.recommendedFoods])
-    // let newFoodObj = {}
-    // newFoodObj[userinputFood] = data.nutrients.Calories
     setfoodEaten([...foodEaten, {foodName: userinputFood, Calories: data.nutrients.Calories}])
   }
 
@@ -655,34 +654,45 @@ function App(props) {
   }
 
   // add the items that you clicked on
-  function handleFoodClick(food) {
-    // get the nutrients of the food that you clicke on
-    const food_nutrients = recommendedFoods[food]
+  async function handleFoodClick(food) {
+    // // get the nutrients of the food that you clicke on
+    // const food_nutrients = recommendedFoods[food]
 
-    // food_nurients = {Calories: 43, Protein: 10}
-    console.log(food_nutrients)
+    // // food_nurients = {Calories: 43, Protein: 10}
+    // console.log(food_nutrients)
 
-    // loop through nutrients of that food that you added
-    for (const nutrient in food_nutrients) {
-      console.log(nutrient)
+    // // loop through nutrients of that food that you added
+    // for (const nutrient in food_nutrients) {
+    //   console.log(nutrient)
 
-      // prints number 11 -> Calories:11
-      // console.log(food_nutrients[nutrient])
+    //   // prints number 11 -> Calories:11
+    //   // console.log(food_nutrients[nutrient])
 
-      const num_nutrient = food_nutrients[nutrient]
+    //   const num_nutrient = food_nutrients[nutrient]
 
-      // console.log(nutrientsEaten)
+    //   // console.log(nutrientsEaten)
 
-      // added those nutrients by looping thru nutrients consumer
+    //   // added those nutrients by looping thru nutrients consumer
 
-      const new_value = nutrientsEaten[nutrient] + num_nutrient
+    //   const new_value = nutrientsEaten[nutrient] + num_nutrient
 
-      setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value })
+    //   setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value })
 
-      // console.log(nutrientsEaten)
+    //   // console.log(nutrientsEaten)
+    // }
+
+    // // console.log(food)
+    let inputFoodData = {
+      addedFood: food.foodName
     }
+    console.log("Sending food input to database: ", inputFoodData)
+    const data = await addFoodCall(inputFoodData)
+    // setNutrientsEaten({Calories: nutrientsEaten.Calories + data.nutrients.Calories, Carbohydrates: nutrientsEaten.Carbohydrates + data.nutrients.Carbohydrates,
+    //   Protein: nutrientsEaten.Protein + data.nutrients.Protein, Fat: nutrientsEaten.Fat + data.nutrients.Fat, Fiber: nutrientsEaten.Fiber + data.nutrients.Fiber})
+    setNutrientsEaten({...data.nutrients})
+    setRecommendedFoods([...data.recommendedFoods])
+    setfoodEaten([...foodEaten, {foodName: food.foodName, Calories: data.nutrients.Calories}])
 
-    // console.log(food)
   }
 
   return (
