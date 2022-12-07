@@ -1,37 +1,16 @@
-import React from "react";
-import { useState } from "react";
-import ReactDOM from "react-dom/client";
-import logo from "./logo.svg";
-import "./App.css";
-import Image from "./doctor.png";
-
-async function registerUserCall(userInfo) {
-  const res = await fetch("http://localhost:8080/api/v1/auth/register", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    // TODO: pass this info fron create form ?
-    body: JSON.stringify(userInfo),
-  });
-  const data = await res.json();
-  console.log("Response from create account: ", JSON.stringify(data));
-  return data;
-}
-
-// loginCreds should be email and password
-async function loginUserCall(
-  loginCreds = { email: "kai123@gmail.com", password: "password" }
-) {
-  const res = await fetch("http://localhost:8080/api/v1/auth/login", {
-    method: "get",
-    headers: { "Content-Type": "application/json" },
-    // TODO: pass this info fron login form ?
-    body: loginCreds,
-  });
-
-  const data = await res.json();
-  alert(data);
-  // change or return state ?
-}
+import React from 'react'
+import { useState } from 'react'
+import ReactDOM from 'react-dom/client'
+import logo from './logo.svg'
+import './App.css'
+import Image from './doctor.png'
+// functions that make calls to API endpoints
+import {
+  registerUserCall,
+  loginUserCall,
+  logoutCall,
+  addFoodCall
+} from './apiCalls'
 
 // WE NEED TO ADD NUTRIENTS OF FOOD EATEN TO NUTRIENTS EATEN TODAY WHEN WE PULL FROM DATA BASE
 function FoodsEatenToday({ userSignedIn, foodsEaten }) {
@@ -43,12 +22,12 @@ function FoodsEatenToday({ userSignedIn, foodsEaten }) {
           {foodsEaten.map((food) => (
             <li className="recNutrientsList">
               {/* change it to foodsEaten[key]["calories"] after backend implemented */}
-              {food.Name + ":"} {food.Calories} Calories
+              {food.Name + ':'} {food.Calories} Calories
             </li>
           ))}
         </ul>
       </div>
-    );
+    )
   }
 }
 
@@ -61,13 +40,13 @@ function RecommendedNutrients({ userSignedIn, recommendedNutrition }) {
         <ul className="list-group">
           {Object.keys(recommendedNutrition).map((key, index) => (
             <li className="recNutrientsList">
-              {key + ":"} {recommendedNutrition[key]}{" "}
-              {key == "Calories" ? "kCal" : key == "Water" ? "liters" : "grams"}
+              {key + ':'} {recommendedNutrition[key]}{' '}
+              {key == 'Calories' ? 'kCal' : key == 'Water' ? 'liters' : 'grams'}
             </li>
           ))}
         </ul>
       </div>
-    );
+    )
   }
 }
 
@@ -76,15 +55,15 @@ function RecommendedFoods({
   recommendedFoods,
   recommendedNutrition,
   nutrientsEaten,
-  handleFoodClick,
+  handleFoodClick
 }) {
   if (userSignedIn) {
-    let metRequirements = true;
+    let metRequirements = true
     Object.keys(nutrientsEaten).map((key, index) => {
       if (nutrientsEaten[key] < recommendedNutrition[key]) {
-        metRequirements = false;
+        metRequirements = false
       }
-    });
+    })
 
     // recommended foods list if it was a list
     // const listItems = recommendedFoods.map((food) =>
@@ -119,14 +98,14 @@ function RecommendedFoods({
               </ul>
             ))}
       </div>
-    );
+    )
   }
 }
 
 function NutrientsEaten({
   userSignedIn,
   nutrientsEaten,
-  recommendedNutrition,
+  recommendedNutrition
 }) {
   /* TODO: Add units */
   if (userSignedIn) {
@@ -138,47 +117,47 @@ function NutrientsEaten({
             if (nutrientsEaten[key] >= recommendedNutrition[key]) {
               return (
                 <li key={key} className="nutrientRequirementAchieved">
-                  {key + ":"} {nutrientsEaten[key]}{" "}
-                  {key == "Calories"
-                    ? "kCal"
-                    : key == "Water"
-                    ? "liters"
-                    : "grams"}
+                  {key + ':'} {nutrientsEaten[key]}{' '}
+                  {key == 'Calories'
+                    ? 'kCal'
+                    : key == 'Water'
+                    ? 'liters'
+                    : 'grams'}
                 </li>
-              );
+              )
             } else {
               return (
                 <li key={key} className="nutrientsEatenList">
-                  {key + ":"} {nutrientsEaten[key]}{" "}
-                  {key == "Calories"
-                    ? "kCal"
-                    : key == "Water"
-                    ? "liters"
-                    : "grams"}
+                  {key + ':'} {nutrientsEaten[key]}{' '}
+                  {key == 'Calories'
+                    ? 'kCal'
+                    : key == 'Water'
+                    ? 'liters'
+                    : 'grams'}
                 </li>
-              );
+              )
             }
           })}
         </ul>
       </div>
-    );
+    )
   }
 }
 
 function SignUpButton({ userSignedIn, setIsSignUpButtonClicked }) {
   /* TODO: Need to add functionality when user clicks Sign Up Button  */
   function onSignUpClick(event) {
-    setIsSignUpButtonClicked(true);
+    setIsSignUpButtonClicked(true)
   }
   if (!userSignedIn) {
     return (
       <div className="signUpDiv">
         <button onClick={onSignUpClick} className="signUpButton">
-          {" "}
+          {' '}
           Sign Up
         </button>
       </div>
-    );
+    )
   }
 }
 
@@ -186,7 +165,7 @@ function FoodInputForm({
   userSignedIn,
   userinputFood,
   handleUserInputFood,
-  handleUserInputFormSubmit,
+  handleUserInputFormSubmit
 }) {
   if (userSignedIn) {
     return (
@@ -202,48 +181,48 @@ function FoodInputForm({
           />
         </label>
       </form>
-    );
+    )
   }
 }
 
 function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
-  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender);
-  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height);
-  const [ageInputValue, setageInputValue] = useState(userInfo.Age);
-  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight);
+  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender)
+  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height)
+  const [ageInputValue, setageInputValue] = useState(userInfo.Age)
+  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight)
 
   function handleUserEditGender(event) {
-    setgenderInputValue(event.target.value);
+    setgenderInputValue(event.target.value)
   }
 
   function handleUserEditHeight(event) {
-    setHeightInputValue(event.target.value);
+    setHeightInputValue(event.target.value)
   }
 
   function handleUserEditAge(event) {
-    setageInputValue(event.target.value);
+    setageInputValue(event.target.value)
   }
 
   function handleUserEditWeight(event) {
-    setweightInputValue(event.target.value);
+    setweightInputValue(event.target.value)
   }
 
   function submitEditForm(event) {
-    console.log("Submit clicked");
-    event.preventDefault();
+    console.log('Submit clicked')
+    event.preventDefault()
     setuserInfo({
       ...userInfo,
       Gender: genderInputValue,
       Height: heightInputValue,
       Age: ageInputValue,
-      Weight: weightInputValue,
-    });
-    setIsEditButtonClicked(false);
+      Weight: weightInputValue
+    })
+    setIsEditButtonClicked(false)
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked");
-    setIsEditButtonClicked(false);
+    console.log('Cancel clicked')
+    setIsEditButtonClicked(false)
   }
 
   return (
@@ -297,7 +276,7 @@ function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function CreateAccount({
@@ -309,83 +288,82 @@ function CreateAccount({
   setrecommendedNutrition,
   setNutrientsEaten,
   setRecommendedFoods
-  
 }) {
-  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender);
-  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height);
-  const [ageInputValue, setageInputValue] = useState(userInfo.Age);
-  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight);
-  const [nameInputValue, setnameInputValue] = useState("");
-  const [emailInputValue, setemailInputValue] = useState("");
-  const [passwordInputValue, setpasswordInputValue] = useState("");
+  const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender)
+  const [heightInputValue, setHeightInputValue] = useState(userInfo.Height)
+  const [ageInputValue, setageInputValue] = useState(userInfo.Age)
+  const [weightInputValue, setweightInputValue] = useState(userInfo.Weight)
+  const [nameInputValue, setnameInputValue] = useState('')
+  const [emailInputValue, setemailInputValue] = useState('')
+  const [passwordInputValue, setpasswordInputValue] = useState('')
 
   function handleUserEditName(event) {
-    setnameInputValue(event.target.value);
+    setnameInputValue(event.target.value)
   }
 
   function handleUserEditEmail(event) {
-    setemailInputValue(event.target.value);
+    setemailInputValue(event.target.value)
   }
 
   function handleUserEditPassword(event) {
-    setpasswordInputValue(event.target.value);
+    setpasswordInputValue(event.target.value)
   }
 
   function handleUserEditGender(event) {
-    setgenderInputValue(event.target.value);
+    setgenderInputValue(event.target.value)
   }
 
   function handleUserEditHeight(event) {
-    setHeightInputValue(event.target.value);
+    setHeightInputValue(event.target.value)
   }
 
   function handleUserEditAge(event) {
-    setageInputValue(event.target.value);
+    setageInputValue(event.target.value)
   }
 
   function handleUserEditWeight(event) {
-    setweightInputValue(event.target.value);
+    setweightInputValue(event.target.value)
   }
 
   async function submitEditForm(event) {
-    console.log("Submit clicked");
+    console.log('Submit clicked')
 
     // TODO: HERE
-    let userInfo = {
+    let info = {
       name: nameInputValue,
       emial: emailInputValue,
       password: passwordInputValue,
       gender: genderInputValue,
       age: ageInputValue,
       height: heightInputValue,
-      weightInputValue,
-    };
+      weightInputValue
+    }
+    // console.log("UserInfo: ", info);
 
-    const data = await registerUserCall();
+    const data = await registerUserCall(info)
 
-    event.preventDefault();
+    event.preventDefault()
     setuserInfo({
       ...userInfo,
       Gender: genderInputValue,
       Height: heightInputValue,
       Age: ageInputValue,
-      Weight: weightInputValue,
-    });
+      Weight: weightInputValue
+    })
     setuserAccountInfo({
       Name: nameInputValue,
       Email: emailInputValue,
-      Password: passwordInputValue,
-    });
-    setIsSignUpButtonClicked(false);
-    setuserSignedIn(true);
+      Password: passwordInputValue
+    })
+    setIsSignUpButtonClicked(false)
+    setuserSignedIn(true)
 
-    setrecommendedNutrition({...data.dailyNutrients})
-
+    setrecommendedNutrition({ ...data.dailyNutrients })
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked");
-    setIsSignUpButtonClicked(false);
+    console.log('Cancel clicked')
+    setIsSignUpButtonClicked(false)
   }
 
   return (
@@ -427,8 +405,8 @@ function CreateAccount({
       </div>
       <div className="editOptions">
         <h3 id="signupInput" className="editInfoHeader">
-          {" "}
-          Input Your Information{" "}
+          {' '}
+          Input Your Information{' '}
         </h3>
         <form onSubmit={submitEditForm}>
           <label>
@@ -477,7 +455,7 @@ function CreateAccount({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function LoginForm({
@@ -486,39 +464,39 @@ function LoginForm({
   setIsSignUpButtonClicked,
   setuserSignedIn,
   setrecommendedNutrition,
-  setIsLoginButtonClicked,
+  setIsLoginButtonClicked
 }) {
-  const [nameInputValue, setnameInputValue] = useState("");
-  const [emailInputValue, setemailInputValue] = useState("");
-  const [passwordInputValue, setpasswordInputValue] = useState("");
+  const [nameInputValue, setnameInputValue] = useState('')
+  const [emailInputValue, setemailInputValue] = useState('')
+  const [passwordInputValue, setpasswordInputValue] = useState('')
 
   function handleUserEditName(event) {
-    setnameInputValue(event.target.value);
+    setnameInputValue(event.target.value)
   }
 
   function handleUserEditEmail(event) {
-    setemailInputValue(event.target.value);
+    setemailInputValue(event.target.value)
   }
 
   function handleUserEditPassword(event) {
-    setpasswordInputValue(event.target.value);
+    setpasswordInputValue(event.target.value)
   }
 
   function submitEditForm(event) {
-    console.log("Submit clicked");
-    event.preventDefault();
+    console.log('Submit clicked')
+    event.preventDefault()
     /* TODO: NEED TO CONNECT WITH BACKEND 
     setuserInfo({...userInfo, Gender: genderInputValue, Height: heightInputValue, Age: ageInputValue, Weight: weightInputValue})
     setuserAccountInfo({Name: nameInputValue,  Email: emailInputValue,  Password: passwordInputValue}) */
-    setIsSignUpButtonClicked(false);
-    setuserSignedIn(true);
-    setIsLoginButtonClicked(false);
+    setIsSignUpButtonClicked(false)
+    setuserSignedIn(true)
+    setIsLoginButtonClicked(false)
   }
 
   function handleCancelClick(event) {
-    console.log("Cancel clicked");
-    setIsSignUpButtonClicked(false);
-    setIsLoginButtonClicked(false);
+    console.log('Cancel clicked')
+    setIsSignUpButtonClicked(false)
+    setIsLoginButtonClicked(false)
   }
 
   return (
@@ -563,111 +541,112 @@ function LoginForm({
         <button onClick={submitEditForm}>Submit</button>
       </div>
     </div>
-  );
+  )
 }
 
 function App(props) {
-  const [isLoginButtonClicked, setIsLoginButtonClicked] = useState(false);
-  const [isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false);
-  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false);
-  const [userSignedIn, setuserSignedIn] = useState(false);
-  const [userinputFood, setuserinputFood] = useState("");
+  const [isLoginButtonClicked, setIsLoginButtonClicked] = useState(false)
+  const [isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false)
+  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
+  const [userSignedIn, setuserSignedIn] = useState(false)
+  const [userinputFood, setuserinputFood] = useState('')
   // foodEaten: [ {Name: Apple, Calories: ..., Carbohydrates: ..., }, {Name: Orange, Calories: ..., } ]
-  const [foodEaten, setfoodEaten] = useState([]);
+  const [foodEaten, setfoodEaten] = useState([])
   const [recommendedNutrition, setrecommendedNutrition] = useState({
     Calories: 10,
     Carbohydrates: 0,
     Fiber: 0,
     Protein: 0,
     Fat: 0,
-    Water: 0,
-  });
+    Water: 0
+  })
   const [nutrientsEaten, setNutrientsEaten] = useState({
     Calories: 0,
     Carbohydrates: 0,
     Fiber: 0,
     Protein: 0,
     Fat: 0,
-    Water: 0,
-  });
+    Water: 0
+  })
   const [recommendedFoods, setRecommendedFoods] = useState({
     Apple: { Calories: 1 },
     Hi: { Calories: 2 },
     Orange: { Calories: 3 },
-    Bye: { Calories: 4 },
-  });
+    Bye: { Calories: 4 }
+  })
   /* UserInfo dictionary may need to be updated based on backend */
   const [userInfo, setuserInfo] = useState({
-    Gender: "",
-    Height: "",
-    Weight: "",
-    Age: "",
-  });
+    Gender: '',
+    Height: '',
+    Weight: '',
+    Age: ''
+  })
   const [userAccountInfo, setuserAccountInfo] = useState({
-    Username: "",
-    Password: "",
-    Email: "",
-  });
+    Username: '',
+    Password: '',
+    Email: ''
+  })
 
   function handleUserInputFood(event) {
-    setuserinputFood(event.target.value);
+    setuserinputFood(event.target.value)
   }
 
   function handleUserInputFormSubmit(event) {
     // Need to add access database stuff here
     // REMOVE LATER
-    event.preventDefault();
-    foodEaten[userinputFood] = "TEST";
-    let userFood = { Name: userinputFood, Calories: "" };
-    setfoodEaten([...foodEaten, userFood]);
+    event.preventDefault()
+    foodEaten[userinputFood] = 'TEST'
+    let userFood = { Name: userinputFood, Calories: '' }
+    setfoodEaten([...foodEaten, userFood])
   }
 
   /* TODO: Need to implement */
   function handleEditClick(event) {
-    console.log("Edit clicked");
-    setIsEditButtonClicked(true);
+    console.log('Edit clicked')
+    setIsEditButtonClicked(true)
   }
 
   /* TODO: Need to implement */
-  function handleLogoutClick(event) {
-    console.log("Logout clicked");
+  async function handleLogoutClick(event) {
+    console.log('Logout clicked')
+    await logoutCall()
     // REMOVE LATER
     // setIsEditButtonClicked(false)
-    setuserSignedIn(false);
-    setIsSignUpButtonClicked(false);
-    setIsEditButtonClicked(false);
+    setuserSignedIn(false)
+    setIsSignUpButtonClicked(false)
+    setIsEditButtonClicked(false)
   }
 
   function handleLoginClick(event) {
-    console.log("Login Clicked");
-    setIsSignUpButtonClicked(false);
-    setIsLoginButtonClicked(true);
+    console.log('Login Clicked')
+    setIsSignUpButtonClicked(false)
+    setIsLoginButtonClicked(true)
   }
 
   // add the items that you clicked on
   function handleFoodClick(food) {
     // get the nutrients of the food that you clicke on
-    const food_nutrients = recommendedFoods[food];
+    const food_nutrients = recommendedFoods[food]
 
     // food_nurients = {Calories: 43, Protein: 10}
-    console.log(food_nutrients);
+    console.log(food_nutrients)
 
     // loop through nutrients of that food that you added
     for (const nutrient in food_nutrients) {
-      console.log(nutrient);
+      console.log(nutrient)
 
       // prints number 11 -> Calories:11
       // console.log(food_nutrients[nutrient])
 
-      const num_nutrient = food_nutrients[nutrient];
+      const num_nutrient = food_nutrients[nutrient]
 
       // console.log(nutrientsEaten)
 
       // added those nutrients by looping thru nutrients consumer
 
-      const new_value = nutrientsEaten[nutrient] + num_nutrient;
+      const new_value = nutrientsEaten[nutrient] + num_nutrient
 
-      setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value });
+      setNutrientsEaten({ ...nutrientsEaten, [nutrient]: new_value })
 
       // console.log(nutrientsEaten)
     }
@@ -691,11 +670,11 @@ function App(props) {
           </div>
         ) : (
           <div className="navigation">
-            {" "}
+            {' '}
             <button className="logoutButton" onClick={handleLoginClick}>
-              {" "}
-              Login{" "}
-            </button>{" "}
+              {' '}
+              Login{' '}
+            </button>{' '}
           </div>
         )}
       </div>
@@ -727,7 +706,6 @@ function App(props) {
           setrecommendedNutrition={setrecommendedNutrition}
           setNutrientsEaten={setNutrientsEaten}
           setRecommendedFoods={setRecommendedFoods}
-          
         />
       ) : null}
       <div
@@ -735,8 +713,8 @@ function App(props) {
         style={{
           display:
             isEditButtonClicked || isSignUpButtonClicked || isLoginButtonClicked
-              ? "none"
-              : "block",
+              ? 'none'
+              : 'block'
         }}
       >
         <div className="improveHeadline">
@@ -758,7 +736,7 @@ function App(props) {
       <div
         className="signedInContent"
         style={{
-          display: isEditButtonClicked || !userSignedIn ? "none" : "block",
+          display: isEditButtonClicked || !userSignedIn ? 'none' : 'block'
         }}
       >
         <div className="inputFood">
@@ -788,7 +766,7 @@ function App(props) {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

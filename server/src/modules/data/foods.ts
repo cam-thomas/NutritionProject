@@ -77,4 +77,5 @@ export interface foodType {
   carbs: number
   protein: number
   fat: number
+  fiber: number
 }

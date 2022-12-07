@@ -42,7 +42,8 @@ export const _updateNutrients = (addedFood: string) => {
     calories: 0,
     carbs: 0,
     protein: 0,
-    fat: 0
+    fat: 0,
+    fiber: 0
   }
   foodsList.forEach((food) => {
     if (food.foodName === addedFood) {
@@ -63,6 +64,8 @@ export const _updateNutrients = (addedFood: string) => {
   CURRENT_NUTRIENTS[user].protein += addedNutrients.protein
   // Fat
   CURRENT_NUTRIENTS[user].fat += addedNutrients.fat
+  // Fiber
+  CURRENT_NUTRIENTS[user].fiber += addedNutrients.fiber
 
   return CURRENT_NUTRIENTS[user]
 }

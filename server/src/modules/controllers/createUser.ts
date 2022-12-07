@@ -43,7 +43,8 @@ export const createUserHandler = async (
       calories: 0,
       carbs: 0,
       protein: 0,
-      fat: 0
+      fat: 0,
+      fiber: 0
     }
     // get recommended foods
     const recFoods = recommend()

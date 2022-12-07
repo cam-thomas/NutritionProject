@@ -36,7 +36,8 @@ export const EditedEricaNutrients = {
   calories: 2150,
   carbs: 242,
   protein: 60,
-  fat: 48
+  fat: 48,
+  fiber: 20
 }
 // Erica's initial things
 // {
