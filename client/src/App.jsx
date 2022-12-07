@@ -92,9 +92,9 @@ function RecommendedFoods({
         {/* {metRequirements ? (<ul>{listItems}</ul>) : null} */}
         {metRequirements
           ? null
-          : Object.keys(recommendedFoods).map((key, index) => (
+          : recommendedFoods.map((food) => (
               <ul className="recFoodList">
-                <button onClick={() => handleFoodClick(key)}>{key}</button>
+                <button onClick={() => handleFoodClick(food.foodName)}>{food.foodName}</button>
               </ul>
             ))}
       </div>
@@ -331,12 +331,12 @@ function CreateAccount({
     // TODO: HERE
     let info = {
       name: nameInputValue,
-      emial: emailInputValue,
+      email: emailInputValue,
       password: passwordInputValue,
       gender: genderInputValue,
       age: ageInputValue,
       height: heightInputValue,
-      weightInputValue
+      weight: weightInputValue
     }
     // console.log("UserInfo: ", info);
 
@@ -358,7 +358,14 @@ function CreateAccount({
     setIsSignUpButtonClicked(false)
     setuserSignedIn(true)
 
-    setrecommendedNutrition({ ...data.dailyNutrients })
+    setrecommendedNutrition({Calories: data.dailyNutrients.calories, Carbohydrates: data.dailyNutrients.carbs, Fiber: data.dailyNutrients.fiber, 
+      Protein: data.dailyNutrients.protein, Fat: data.dailyNutrients.fat })
+
+    setNutrientsEaten({Calories: data.currentNutrients.calories, Carbohydrates: data.currentNutrients.carbs, Fiber: data.currentNutrients.fiber, 
+      Protein: data.currentNutrients.protein, Fat: data.currentNutrients.fat })
+    
+    setRecommendedFoods([...data.recommendedFoods])
+
   }
 
   function handleCancelClick(event) {
@@ -553,7 +560,7 @@ function App(props) {
   // foodEaten: [ {Name: Apple, Calories: ..., Carbohydrates: ..., }, {Name: Orange, Calories: ..., } ]
   const [foodEaten, setfoodEaten] = useState([])
   const [recommendedNutrition, setrecommendedNutrition] = useState({
-    Calories: 10,
+    Calories: 0,
     Carbohydrates: 0,
     Fiber: 0,
     Protein: 0,
@@ -568,12 +575,16 @@ function App(props) {
     Fat: 0,
     Water: 0
   })
-  const [recommendedFoods, setRecommendedFoods] = useState({
-    Apple: { Calories: 1 },
-    Hi: { Calories: 2 },
-    Orange: { Calories: 3 },
-    Bye: { Calories: 4 }
-  })
+  // const [recommendedFoods, setRecommendedFoods] = useState({
+  //   Apple: { Calories: 1 },
+  //   Hi: { Calories: 2 },
+  //   Orange: { Calories: 3 },
+  //   Bye: { Calories: 4 }
+  // })
+
+  const [recommendedFoods, setRecommendedFoods] = useState([])
+
+
   /* UserInfo dictionary may need to be updated based on backend */
   const [userInfo, setuserInfo] = useState({
     Gender: '',
@@ -591,13 +602,19 @@ function App(props) {
     setuserinputFood(event.target.value)
   }
 
-  function handleUserInputFormSubmit(event) {
+  async function handleUserInputFormSubmit(event) {
     // Need to add access database stuff here
     // REMOVE LATER
     event.preventDefault()
-    foodEaten[userinputFood] = 'TEST'
-    let userFood = { Name: userinputFood, Calories: '' }
-    setfoodEaten([...foodEaten, userFood])
+    let inputFoodData = {
+      addedFood: userinputFood
+    }
+    console.log("Sending food input to database: ", inputFoodData)
+    const data = await addFoodCall(inputFoodData)
+    setNutrientsEaten({Calories: data.currentNutrients.calories, Carbohydrates: data.currentNutrients.carbs, Fiber: data.currentNutrients.fiber, 
+      Protein: data.currentNutrients.protein, Fat: data.currentNutrients.fat })
+    setRecommendedFoods([...data.recommendedFoods])
+    setfoodEaten([...foodEaten, {userinputFood: data.nutrients}])
   }
 
   /* TODO: Need to implement */
