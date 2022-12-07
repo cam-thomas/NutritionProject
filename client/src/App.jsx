@@ -471,7 +471,8 @@ function LoginForm({
   setrecommendedNutrition,
   setIsLoginButtonClicked,
   setNutrientsEaten,
-  setRecommendedFoods
+  setRecommendedFoods,
+  setfoodEaten
 }) {
   const [nameInputValue, setnameInputValue] = useState('')
   const [emailInputValue, setemailInputValue] = useState('')
@@ -510,6 +511,7 @@ function LoginForm({
     setNutrientsEaten({...data.currentNutrients })
     
     setRecommendedFoods([...data.recommendedFoods])
+    setfoodEaten([...data.foodsEaten])
   }
 
   function handleCancelClick(event) {
@@ -730,6 +732,7 @@ function App(props) {
           setIsLoginButtonClicked={setIsLoginButtonClicked}
           setNutrientsEaten={setNutrientsEaten}
           setRecommendedFoods={setRecommendedFoods}
+          setfoodEaten={setfoodEaten}
         />
       ) : null}
       {isEditButtonClicked ? (
