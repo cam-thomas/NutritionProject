@@ -1,26 +1,26 @@
 export interface nutrients {
-  protein: number
-  fat: number
-  carbs: number
-  calories: number
-  fiber: number
+  Protein: number
+  Fat: number
+  Carbohydrates: number
+  Calories: number
+  Fiber: number
 }
 
 export const userRequiredNutrients = [
   {
     name: 'Erica',
-    calories: 2197,
-    carbs: 247,
-    protein: 64,
-    fat: 49,
-    fiber: 25
+    Calories: 2197,
+    Carbohydrates: 247,
+    Protein: 64,
+    Fat: 49,
+    Fiber: 25
   },
   {
     name: 'Kai',
-    calories: 2873,
-    carbs: 323,
-    protein: 64,
-    fat: 64,
-    fiber: 30
+    Calories: 2873,
+    Carbohydrates: 323,
+    Protein: 64,
+    Fat: 64,
+    Fiber: 30
   }
 ]

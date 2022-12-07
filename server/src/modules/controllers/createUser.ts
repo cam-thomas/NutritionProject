@@ -40,11 +40,11 @@ export const createUserHandler = async (
 
     // init current nutrients to 0
     CURRENT_NUTRIENTS[new_user.name] = {
-      calories: 0,
-      carbs: 0,
-      protein: 0,
-      fat: 0,
-      fiber: 0
+      Calories: 0,
+      Carbohydrates: 0,
+      Protein: 0,
+      Fat: 0,
+      Fiber: 0
     }
     // get recommended foods
     const recFoods = recommend()

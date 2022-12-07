@@ -33,6 +33,7 @@ export const loginHandler = async (
     const currNutrients = CURRENT_NUTRIENTS[user.name]
     // recommended nutrients for that person
     const recNutrients = NEEDED_NUTRIENTS[user.name]
+    // foods the person has ate
 
     const resData = {
       dailyNutrients: recNutrients,

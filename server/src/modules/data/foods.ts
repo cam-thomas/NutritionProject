@@ -1,81 +1,147 @@
 export const foodsList: foodType[] = [
   {
     foodName: 'Banana',
-    calories: 105,
-    carbs: 27,
-    protein: 1,
-    fat: 1
+    Calories: 105,
+    Carbohydrates: 27,
+    Protein: 1,
+    Fat: 1,
+    Fiber: 3
   },
   {
     foodName: 'Apple',
-    calories: 95,
-    carbs: 25,
-    protein: 1,
-    fat: 1
+    Calories: 95,
+    Carbohydrates: 25,
+    Protein: 1,
+    Fat: 1,
+    Fiber: 4
   },
   {
     foodName: 'Chicken & Rice',
-    calories: 532,
-    carbs: 22,
-    protein: 68,
-    fat: 17
+    Calories: 532,
+    Carbohydrates: 22,
+    Protein: 68,
+    Fat: 17,
+    Fiber: 1
   },
   {
     foodName: 'Steak',
-    calories: 610,
-    carbs: 0,
-    protein: 58,
-    fat: 41
+    Calories: 610,
+    Carbohydrates: 0,
+    Protein: 58,
+    Fat: 41,
+    Fiber: 0
   },
   {
     foodName: 'Oatmeal',
-    calories: 166,
-    carbs: 28,
-    protein: 6,
-    fat: 4
+    Calories: 166,
+    Carbohydrates: 28,
+    Protein: 6,
+    Fat: 4,
+    Fiber: 4
   },
   {
     foodName: 'Ice Cream',
-    calories: 273,
-    carbs: 31,
-    protein: 5,
-    fat: 15
+    Calories: 273,
+    Carbohydrates: 31,
+    Protein: 5,
+    Fat: 15,
+    Fiber: 1
   },
   {
     foodName: 'Turkey Sandwich',
-    calories: 324,
-    carbs: 29,
-    protein: 21,
-    fat: 13
+    Calories: 324,
+    Carbohydrates: 29,
+    Protein: 21,
+    Fat: 13,
+    Fiber: 2
   },
   {
     foodName: 'Fried Eggs',
-    calories: 180,
-    carbs: 1,
-    protein: 13,
-    fat: 13
+    Calories: 180,
+    Carbohydrates: 1,
+    Protein: 13,
+    Fat: 13,
+    Fiber: 0
   },
   {
     foodName: 'Bacon',
-    calories: 161,
-    carbs: 1,
-    protein: 12,
-    fat: 12
+    Calories: 161,
+    Carbohydrates: 1,
+    Protein: 12,
+    Fat: 12,
+    Fiber: 0
   },
   {
     foodName: 'Mango Smoothie',
-    calories: 120,
-    carbs: 22,
-    protein: 5,
-    fat: 2
+    Calories: 120,
+    Carbohydrates: 22,
+    Protein: 5,
+    Fat: 2,
+    Fiber: 2
+  },
+  {
+    foodName: 'Chicken Alfredo',
+    Calories: 1190,
+    Carbohydrates: 71,
+    Protein: 46,
+    Fat: 81,
+    Fiber: 4
+  },
+  {
+    foodName: 'Enchiladas',
+    Calories: 574,
+    Carbohydrates: 60,
+    Protein: 28,
+    Fat: 24,
+    Fiber: 5
+  },
+  {
+    foodName: 'Chicken Caesar Salad',
+    Calories: 508,
+    Carbohydrates: 14,
+    Protein: 48,
+    Fat: 28,
+    Fiber: 3
+  },
+  {
+    foodName: 'Fruit Salad',
+    Calories: 97,
+    Carbohydrates: 24,
+    Protein: 1,
+    Fat: 1,
+    Fiber: 3
+  },
+  {
+    foodName: 'Pizza (3 pcs)',
+    Calories: 855,
+    Carbohydrates: 108,
+    Protein: 36,
+    Fat: 30,
+    Fiber: 8
+  },
+  {
+    foodName: 'Edamame',
+    Calories: 188,
+    Carbohydrates: 14,
+    Protein: 18,
+    Fat: 8,
+    Fiber: 8
+  },
+  {
+    foodName: 'Beer (1 Pint)',
+    Calories: 204,
+    Carbohydrates: 17,
+    Protein: 2,
+    Fat: 0,
+    Fiber: 0
   }
 ]
 
 export interface foodType {
   foodName: string
-  calories: number
-  carbs: number
-  protein: number
-  fat: number
-  fiber: number
+  Calories: number
+  Carbohydrates: number
+  Protein: number
+  Fat: number
+  Fiber: number
 }

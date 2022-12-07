@@ -39,11 +39,11 @@ export const _updateNutrients = (addedFood: string) => {
   // grab food info for food that was added
   let addedNutrients: foodType = {
     foodName: '',
-    calories: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-    fiber: 0
+    Calories: 0,
+    Carbohydrates: 0,
+    Protein: 0,
+    Fat: 0,
+    Fiber: 0
   }
   foodsList.forEach((food) => {
     if (food.foodName === addedFood) {
@@ -57,15 +57,15 @@ export const _updateNutrients = (addedFood: string) => {
   }
 
   // Calories
-  CURRENT_NUTRIENTS[user].calories += addedNutrients.calories
+  CURRENT_NUTRIENTS[user].Calories += addedNutrients.Calories
   // Carbs
-  CURRENT_NUTRIENTS[user].carbs += addedNutrients.carbs
+  CURRENT_NUTRIENTS[user].Carbohydrates += addedNutrients.Carbohydrates
   // Protein
-  CURRENT_NUTRIENTS[user].protein += addedNutrients.protein
+  CURRENT_NUTRIENTS[user].Protein += addedNutrients.Protein
   // Fat
-  CURRENT_NUTRIENTS[user].fat += addedNutrients.fat
+  CURRENT_NUTRIENTS[user].Fat += addedNutrients.Fat
   // Fiber
-  CURRENT_NUTRIENTS[user].fiber += addedNutrients.fiber
+  CURRENT_NUTRIENTS[user].Fiber += addedNutrients.Fiber
 
   return CURRENT_NUTRIENTS[user]
 }

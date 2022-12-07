@@ -14,61 +14,61 @@ export const initData = () => {
 
   // load Kai and Erica's needed nutrients
   NEEDED_NUTRIENTS['Erica'] = {
-    calories: 2197,
-    carbs: 247,
-    protein: 64,
-    fat: 49,
-    fiber: 25
+    Calories: 2197,
+    Carbohydrates: 247,
+    Protein: 64,
+    Fat: 49,
+    Fiber: 25
   }
 
   // Kai's initial info
   NEEDED_NUTRIENTS['Kai'] = {
-    calories: 2873,
-    carbs: 323,
-    protein: 64,
-    fat: 64,
-    fiber: 30
+    Calories: 2873,
+    Carbohydrates: 323,
+    Protein: 64,
+    Fat: 64,
+    Fiber: 30
   }
 
   CURRENT_NUTRIENTS['Kai'] = {
-    calories: 1573,
-    carbs: 150,
-    protein: 20,
-    fat: 21,
-    fiber: 17
+    Calories: 1573,
+    Carbohydrates: 150,
+    Protein: 20,
+    Fat: 21,
+    Fiber: 17
   }
   RECOMMENDER_DICT['Kai'] = [
     {
       foodName: 'Banana',
-      calories: 105,
-      carbs: 27,
-      protein: 1,
-      fat: 1,
-      fiber: 3
+      Calories: 105,
+      Carbohydrates: 27,
+      Protein: 1,
+      Fat: 1,
+      Fiber: 3
     },
     {
       foodName: 'Fried Eggs',
-      calories: 180,
-      carbs: 1,
-      protein: 13,
-      fat: 13,
-      fiber: 0
+      Calories: 180,
+      Carbohydrates: 1,
+      Protein: 13,
+      Fat: 13,
+      Fiber: 0
     },
     {
       foodName: 'Turkey Sandwich',
-      calories: 324,
-      carbs: 29,
-      protein: 21,
-      fat: 13,
-      fiber: 2
+      Calories: 324,
+      Carbohydrates: 29,
+      Protein: 21,
+      Fat: 13,
+      Fiber: 2
     },
     {
       foodName: 'Bacon',
-      calories: 161,
-      carbs: 1,
-      protein: 12,
-      fat: 12,
-      fiber: 0
+      Calories: 161,
+      Carbohydrates: 1,
+      Protein: 12,
+      Fat: 12,
+      Fiber: 0
     }
   ]
 }
