@@ -338,14 +338,14 @@ function CreateAccount({ userInfo, setuserInfo, setIsSignUpButtonClicked, setuse
 }
 
 function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, setuserSignedIn, setrecommendedNutrition, setIsLoginButtonClicked }) {
-  const [nameInputValue, setnameInputValue] = useState("")
+  // const [nameInputValue, setnameInputValue] = useState("")
   const [emailInputValue, setemailInputValue] = useState("")
   const [passwordInputValue, setpasswordInputValue] = useState("")
 
 
-  function handleUserEditName(event) {
-    setnameInputValue(event.target.value)
-  }
+  // function handleUserEditName(event) {
+  //   setnameInputValue(event.target.value)
+  // }
 
   function handleUserEditEmail(event) {
     setemailInputValue(event.target.value)
@@ -378,10 +378,10 @@ function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, 
       <div className="inputAccountInfo">
         <h3 className="createAccountHeader"> Login </h3>
         <form>
-          <label>
+          {/* <label>
             Name:
             <input className="editLabel" type="text" value={nameInputValue} onChange={handleUserEditName} />
-          </label>
+          </label> */}
           <br />
           <label>
             Email:
@@ -390,7 +390,7 @@ function LoginForm({ setuserInfo, setuserAccountInfo, setIsSignUpButtonClicked, 
           <br />
           <label>
             Password:
-            <input className="editLabel" type="text" value={passwordInputValue} onChange={handleUserEditPassword} />
+            <input type="password" className="editLabel" value={passwordInputValue} onChange={handleUserEditPassword} />
           </label>
           <br />
         </form>
