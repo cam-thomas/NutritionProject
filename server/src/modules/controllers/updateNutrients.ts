@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { recommend } from './helpers'
-import { LOGGED_IN_USER, CURRENT_NUTRIENTS } from '../../index'
+import { LOGGED_IN_USER, CURRENT_NUTRIENTS, FOODS_EATEN } from '../../index'
 import { foodsList, foodType } from '../data/foods'
 import log from '../../lib/logging/logger'
 
@@ -20,7 +20,8 @@ export const updateNutrients = async (
     const recFoods = recommend()
     const data = {
       nutrients: nutrients,
-      recommendedFoods: recFoods
+      recommendedFoods: recFoods,
+      foodsEaten: FOODS_EATEN[LOGGED_IN_USER.name]
     }
 
     log.info(`Updating nutrients for user ${LOGGED_IN_USER.name}`)
@@ -67,5 +68,7 @@ export const _updateNutrients = (addedFood: string) => {
   // Fiber
   CURRENT_NUTRIENTS[user].Fiber += addedNutrients.Fiber
 
+  // add food to FOODS_EATEN list for that user
+  FOODS_EATEN[user].push(addedNutrients)
   return CURRENT_NUTRIENTS[user]
 }

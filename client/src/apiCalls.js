@@ -96,11 +96,11 @@ export const loginUserCall = async (loginCreds) => {
 //     Fiber: 30
 //   },
 //   currentNutrients: {
-//     Calories: 1573,
-//     Carbohydrates: 150,
-//     Protein: 20,
-//     Fat: 21,
-//     Fiber: 17
+//     Calories: 1917,
+//     Carbohydrates: 29,
+//     Protein: 77,
+//     Fat: 58,
+//     Fiber: 4
 //   },
 //   recommendedFoods: [
 //     {
@@ -135,6 +135,32 @@ export const loginUserCall = async (loginCreds) => {
 //       Fat: 12,
 //       Fiber: 0
 //     }
+//   ],
+//   foodsEaten: [
+//     {
+//       foodName: 'Steak',
+//       Calories: 610,
+//       Carbohydrates: 0,
+//       Protein: 58,
+//       Fat: 41,
+//       Fiber: 0
+//     },
+//     {
+//       foodName: 'Fried Eggs',
+//       Calories: 180,
+//       Carbohydrates: 1,
+//       Protein: 13,
+//       Fat: 13,
+//       Fiber: 0
+//     },
+//     {
+//       foodName: 'Oatmeal',
+//       Calories: 166,
+//       Carbohydrates: 28,
+//       Protein: 6,
+//       Fat: 4,
+//       Fiber: 4
+//     }
 //   ]
 // }
 
@@ -165,7 +191,7 @@ export const addFoodCall = async (addedFood) => {
   return data
 }
 
-// example response = {
+// response = {
 //   nutrients: {
 //     Calories: 1897,
 //     Carbohydrates: 179,
@@ -206,10 +232,70 @@ export const addFoodCall = async (addedFood) => {
 //       Fat: 1,
 //       Fiber: 3
 //     }
+//   ],
+//   foodsEaten: [
+//     {
+//       foodName: 'Steak',
+//       Calories: 610,
+//       Carbohydrates: 0,
+//       Protein: 58,
+//       Fat: 41,
+//       Fiber: 0
+//     },
+//     {
+//       foodName: 'Fried Eggs',
+//       Calories: 180,
+//       Carbohydrates: 1,
+//       Protein: 13,
+//       Fat: 13,
+//       Fiber: 0
+//     },
+//     {
+//       foodName: 'Oatmeal',
+//       Calories: 166,
+//       Carbohydrates: 28,
+//       Protein: 6,
+//       Fat: 4,
+//       Fiber: 4
+//     },
+//     {
+//       foodName: 'Turkey Sandwich',
+//       Calories: 324,
+//       Carbohydrates: 29,
+//       Protein: 21,
+//       Fat: 13,
+//       Fiber: 2
+//     }
 //   ]
 // }
 
-// Note: currently backend isn't keeping track of "FoodsEaten" we should probably
-// be keeping track of this and return it in the log in response..
-// for now lets worry about getting everything to update correctly for our scenarios tho..
-// its a simple fix tho
+//****** EDIT  ERICA ********/
+
+// this endpoint works for scenario where Erica changes her weight to 165.. can make this work for other stuff as well if needed
+
+// updatedInfo = {
+//    "gender": "female",
+//    "age": 27,
+//    "height": 58,
+//    "weight": 165
+// }
+export const EditErica = async (updatedInfo) => {
+  const res = await fetch('http://localhost:8080/api/v1/users/editUser', {
+    method: 'put',
+    headers: { 'Content-Type': 'application/json' },
+    // TODO: pass this info fron create form ?
+    body: JSON.stringify(updatedInfo)
+  })
+  const data = await res.json()
+  console.log('Response from editing user: ', JSON.stringify(data))
+  return data
+}
+// example response = {
+//   dailyNutrients: {
+//     Calories: 2150,
+//     Carbohydrates: 242,
+//     Protein: 60,
+//     Fat: 48,
+//     Fiber: 20
+//   }
+// }

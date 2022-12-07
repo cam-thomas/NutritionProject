@@ -3,7 +3,8 @@ import {
   USER_DICT,
   LOGGED_IN_USER,
   CURRENT_NUTRIENTS,
-  NEEDED_NUTRIENTS
+  NEEDED_NUTRIENTS,
+  FOODS_EATEN
 } from '../../index'
 import log from '../../lib/logging/logger'
 import { recommend } from './helpers'
@@ -46,6 +47,9 @@ export const createUserHandler = async (
       Fat: 0,
       Fiber: 0
     }
+
+    FOODS_EATEN[LOGGED_IN_USER.name] = []
+
     // get recommended foods
     const recFoods = recommend()
     const resData = {

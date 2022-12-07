@@ -2,7 +2,8 @@ import {
   NEEDED_NUTRIENTS,
   USER_DICT,
   RECOMMENDER_DICT,
-  CURRENT_NUTRIENTS
+  CURRENT_NUTRIENTS,
+  FOODS_EATEN
 } from './index'
 import { userInfo, existing_users } from './modules/data/users'
 
@@ -29,14 +30,41 @@ export const initData = () => {
     Fat: 64,
     Fiber: 30
   }
+  FOODS_EATEN['Kai'] = [
+    {
+      foodName: 'Steak',
+      Calories: 610,
+      Carbohydrates: 0,
+      Protein: 58,
+      Fat: 41,
+      Fiber: 0
+    },
+    {
+      foodName: 'Fried Eggs',
+      Calories: 180,
+      Carbohydrates: 1,
+      Protein: 13,
+      Fat: 13,
+      Fiber: 0
+    },
+    {
+      foodName: 'Oatmeal',
+      Calories: 166,
+      Carbohydrates: 28,
+      Protein: 6,
+      Fat: 4,
+      Fiber: 4
+    }
+  ]
 
   CURRENT_NUTRIENTS['Kai'] = {
-    Calories: 1573,
-    Carbohydrates: 150,
-    Protein: 20,
-    Fat: 21,
-    Fiber: 17
+    Calories: 1917,
+    Carbohydrates: 29,
+    Protein: 77,
+    Fat: 58,
+    Fiber: 4
   }
+
   RECOMMENDER_DICT['Kai'] = [
     {
       foodName: 'Banana',

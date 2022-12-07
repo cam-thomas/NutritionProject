@@ -22,7 +22,8 @@ export const USER_DICT: { [key: string]: userInfo } = {}
 export const CURRENT_NUTRIENTS: { [key: string]: nutrients } = {}
 // maps users name to what foods we currently recommend for them
 export const RECOMMENDER_DICT: { [key: string]: foodType[] } = {}
-
+// maps users name to what foods they have eaten
+export const FOODS_EATEN: { [key: string]: foodType[] } = {}
 initData()
 
 // express application

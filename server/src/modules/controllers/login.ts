@@ -4,7 +4,8 @@ import {
   LOGGED_IN_USER,
   RECOMMENDER_DICT,
   CURRENT_NUTRIENTS,
-  NEEDED_NUTRIENTS
+  NEEDED_NUTRIENTS,
+  FOODS_EATEN
 } from '../../index'
 import { userInfo } from '../data/users'
 import log from '../../lib/logging/logger'
@@ -38,7 +39,8 @@ export const loginHandler = async (
     const resData = {
       dailyNutrients: recNutrients,
       currentNutrients: currNutrients,
-      recommendedFoods: recFoods
+      recommendedFoods: recFoods,
+      foodsEaten: FOODS_EATEN[LOGGED_IN_USER.name]
     }
     log.info(`Successfully logged in user ${user.name}`)
     return res.status(200).send(resData)
