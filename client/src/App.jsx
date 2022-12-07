@@ -9,7 +9,8 @@ import {
   registerUserCall,
   loginUserCall,
   logoutCall,
-  addFoodCall
+  addFoodCall,
+  EditErica
 } from './apiCalls'
 
 // WE NEED TO ADD NUTRIENTS OF FOOD EATEN TO NUTRIENTS EATEN TODAY WHEN WE PULL FROM DATA BASE
@@ -185,7 +186,7 @@ function FoodInputForm({
   }
 }
 
-function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
+function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked, setrecommendedNutrition}) {
   const [genderInputValue, setgenderInputValue] = useState(userInfo.Gender)
   const [heightInputValue, setHeightInputValue] = useState(userInfo.Height)
   const [ageInputValue, setageInputValue] = useState(userInfo.Age)
@@ -207,7 +208,7 @@ function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
     setweightInputValue(event.target.value)
   }
 
-  function submitEditForm(event) {
+  async function submitEditForm(event) {
     console.log('Submit clicked')
     event.preventDefault()
     setuserInfo({
@@ -217,6 +218,17 @@ function EditForm({ userInfo, setuserInfo, setIsEditButtonClicked }) {
       Age: ageInputValue,
       Weight: weightInputValue
     })
+
+    let updatedInfo = {
+      gender: genderInputValue,
+      age: ageInputValue,
+      height: heightInputValue,
+      weight: weightInputValue
+    }
+
+    const data = await EditErica(updatedInfo)
+    setrecommendedNutrition({...data.dailyNutrients})
+
     setIsEditButtonClicked(false)
   }
 
@@ -740,6 +752,7 @@ function App(props) {
           userInfo={userInfo}
           setuserInfo={setuserInfo}
           setIsEditButtonClicked={setIsEditButtonClicked}
+          setrecommendedNutrition={setrecommendedNutrition}
         />
       ) : null}
       {isSignUpButtonClicked ? (
