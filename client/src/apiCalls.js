@@ -150,15 +150,15 @@ export const logoutCall = async () => {
 
 //****** ADD FOOD (Kai)  ********/
 // example for Kai
-// addedFood = "Turkey Sanwich" // just needs to be the name (string) of one of the foods in our backend foodList
+// addedFood = {
+//   addedFood: 'food name'
+// }
 export const addFoodCall = async (addedFood) => {
   const res = await fetch('http://localhost:8080/api/v1/users/addFood', {
     method: 'put',
     headers: { 'Content-Type': 'application/json' },
     // TODO: pass this info fron create form ?
-    body: JSON.stringify({
-      addedFood: addedFood
-    })
+    body: JSON.stringify(addedFood)
   })
   const data = await res.json()
   console.log('Response from adding food: ', JSON.stringify(data))
