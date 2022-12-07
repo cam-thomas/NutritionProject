@@ -412,7 +412,7 @@ function CreateAccount({
             Password:
             <input
               className="editLabel"
-              type="text"
+              type="password"
               value={passwordInputValue}
               onChange={handleUserEditPassword}
             />
@@ -486,13 +486,13 @@ function LoginForm({
   setRecommendedFoods,
   setfoodEaten
 }) {
-  const [nameInputValue, setnameInputValue] = useState('')
+  // const [nameInputValue, setnameInputValue] = useState('')
   const [emailInputValue, setemailInputValue] = useState('')
   const [passwordInputValue, setpasswordInputValue] = useState('')
 
-  function handleUserEditName(event) {
-    setnameInputValue(event.target.value)
-  }
+  // function handleUserEditName(event) {
+  //   setnameInputValue(event.target.value)
+  // }
 
   function handleUserEditEmail(event) {
     setemailInputValue(event.target.value)
@@ -537,7 +537,7 @@ function LoginForm({
       <div className="inputAccountInfo">
         <h3 className="createAccountHeader"> Login </h3>
         <form>
-          <label>
+          {/* <label>
             Name:
             <input
               className="editLabel"
@@ -545,7 +545,7 @@ function LoginForm({
               value={nameInputValue}
               onChange={handleUserEditName}
             />
-          </label>
+          </label> */}
           <br />
           <label>
             Email:
@@ -561,7 +561,7 @@ function LoginForm({
             Password:
             <input
               className="editLabel"
-              type="text"
+              type="password"
               value={passwordInputValue}
               onChange={handleUserEditPassword}
             />
